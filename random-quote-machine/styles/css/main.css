@@ -103,3 +103,8 @@ a:hover {
   color: #fde7af;
   text-decoration: underline;
 }
+
+.alt {
+  background: #fde7af;
+  color: #4f6845;
+}

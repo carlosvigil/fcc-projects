@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   $('.random').on('click', function() {
     chapter = Math.floor(Math.random() * (81 - 1)) + 1;
-
+    $('body').toggleClass(1364, 'alt');
     $('article').fadeOut(1364.000733092, function() {
      $('article').html(book[chapter]);
      $('body').animate({ scrollTop: 0 }, 521.0019193625);
