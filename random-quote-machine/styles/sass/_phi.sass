@@ -1,0 +1,11 @@
+$phi: 1.618033988749
+
+@function phi-a($number)
+  @return $number / $phi
+
+$phi3: 2.618033988733
+$phi4: 4.236067977467
+$phi5: 6.854101966185
+
+@function phi-b($number)
+  @return $number - ($number / $phi)
