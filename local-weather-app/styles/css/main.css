@@ -102,6 +102,31 @@ a {
   text-decoration: none;
 }
 
-.accu {
+body {
   text-align: center;
+}
+
+li {
+  display: inline-block;
+  margin: 8px;
+}
+
+.green {
+  background-color: #30b530;
+}
+
+.red {
+  background-color: #d40c38;
+}
+
+.white {
+  color: #fbfffa;
+}
+
+.blue {
+  background-color: #2dccd7;
+}
+
+.yellow {
+  background-color: #fdef53;
 }
