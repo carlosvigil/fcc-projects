@@ -13,34 +13,55 @@ body
   color: $whiteish
   font-family: Merriweather, serif
   font-size: 100%
-  padding: phi-a(11.09016994363) * 1%
-
-.main
-  margin: auto
-  width: 100%
 
 .h1
   clear: left
   color: $orangy
   float: left
   font-size: 261.8033988733%
-  margin: phi-b(11.09016994363) * 1%
+  height: 100%
+
+.bar
+  float: left
+  height: 100%
+  left: 200px
+  top: 200px
+  width: 2.618033988733px
+
+.line-top
+  border-bottom: 320px solid $whiteish
+  border-left: 1px solid transparent
+  border-right: 1px solid transparent
+
+.line-bottom
+  border-left: 1px solid transparent
+  border-right: 1px solid transparent
+  border-top: 320px solid $whiteish
 
 article
   font-size: 161.803398874%
-  margin: phi-a(6.854101966185) * 1%
+  width: 61.80339887498%
 
 .buttons
+  align-items: center
   flex: auto
-  margin: phi-b(6.854101966185) * 1%
+  margin: none
+
+td
+  vertical-align: top
+
+.random
+  background-color: $whiteish
+  border: 0
+  border-radius: 2.618033988733px
+  color: $greenish
+  height: 100%
 
 .credit
   color: $brownish
-  margin: phi-a(4.236067977467) * 1%
 
 .footer
   color: $brownish
-  margin: phi-b(4.236067977467) * 1%
 
 a
   color: $orangy
@@ -50,6 +71,10 @@ a:hover
   color: $whiteish
   text-decoration: underline
 
-.alt
+.alt-light
   background: $whiteish
   color: $greenish
+
+.alt-dark
+  background-color: $greenish
+  color: $whiteish
