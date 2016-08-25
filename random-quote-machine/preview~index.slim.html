@@ -195,8 +195,8 @@
           console.log(book);
           $('.random').on('click', function() {
             chapter = Math.floor(Math.random() * (81 - 2)) + 2;
-            $(this).toggleClass('light');
-            $('.main').toggleClass('dark');
+            $(this).toggleClass('dark');
+            $('body').toggleClass('light');
             $('article').fadeOut(1364.000733092, function() {
               $('article').html(book[chapter]);
               $('article').fadeIn(842.998813731);

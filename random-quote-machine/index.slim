@@ -1,0 +1,275 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    meta property="og:url" content="http://codepen.io/Cairos/full/ZOwGXw/"
+    meta property="og:type" content="website"
+    meta property="og:title" content="Random Tao Te Ching"
+    meta property="og:description" content="Get a random chapter from the Tao Te Ching"
+    link href="https://fonts.googleapis.com/css?family=Cabin|Cabin+Sketch:700" rel="stylesheet"
+    script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"
+    title Random Tao Te Ching Chapters
+
+    sass:
+      // Reset
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed,
+      figure, figcaption, footer, header, hgroup,
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video
+        margin: 0
+        padding: 0
+        border: 0
+        font-size: 100%
+        font: inherit
+        vertical-align: baseline
+
+      article, aside, details, figcaption, figure,
+      footer, header, hgroup, menu, nav, section
+        display: block
+
+      body
+        line-height: normal
+
+      ol, ul
+        list-style: none
+
+      blockquote, q
+        quotes: none
+
+      blockquote:before, blockquote:after,
+      q:before, q:after
+        content: ''
+        content: none
+
+      table
+        border-collapse: collapse
+        border-spacing: 0
+
+      // Phi
+      $phi: 1.618033988749
+
+      @function phi-a($number)
+        @return $number / $phi
+
+      $phi3: 2.618033988733
+      $phi4: 4.236067977467
+      $phi5: 6.854101966185
+
+      @function phi-b($number)
+        @return $number - ($number / $phi)
+
+      // Palette
+      $orangy:   hsl(36, 73%, 48%)
+      $brownish: hsl(37, 39%, 54%)
+      $whiteish: hsl(43, 95%, 84%)
+      $greenish: hsl(104, 20%, 34%)
+
+      // Helpers
+      %tsb
+        border-left: 1px solid transparent
+        border-right: 1px solid transparent
+
+      // Le styles
+      html,
+      body,
+        background-color: $greenish
+        height: 100%
+        margin: none
+        overflow: auto
+        text-align: center
+
+      body
+        color: $whiteish
+        font-family: 'Cabin', serif
+        font-size: 122.9918693786%
+
+      .main
+        margin: auto
+
+      .h1
+        color: $orangy
+        float: left
+        font-family: 'Cabin Sketch', cursive
+        font-size: 161.8033988749%
+        height: phi-a(phi-b(100)) * 1%
+        padding-top: phi-a(phi-b(100)) * 1%
+        width: phi-a(phi-b(100)) * 1%
+
+      .line
+        float: left
+        height: 100%
+        padding-top: phi-b(phi-b(phi-b(100))) * 1%
+
+      article
+        height: phi-a(100) * 1%
+        padding: phi-a(phi-b(100)) * 1%
+        width: phi-a(100) * 1%
+
+      .credit
+        clear: left
+        color: $brownish
+        float: left
+        font-size: 76.0131556159%
+
+      .buttons
+        float: right
+        height: phi-b(phi-b(100)) * 1%
+        width: phi-b(phi-b(100)) * 1%
+
+      // Misc
+
+      .random
+        background-color: $whiteish
+        border: 0
+        border-radius: 2.618033988733px
+        color: $greenish
+
+      a
+        color: $orangy
+        text-decoration: none
+
+      a:hover
+        color: $whiteish
+        text-decoration: underline
+
+      .line-top
+        @extend %tsb
+        border-bottom: 320px solid $whiteish
+
+      .line-bottom
+        @extend %tsb
+        border-top: 320px solid $whiteish
+
+      .light
+        background-color: $whiteish
+        color: $greenish
+
+      .dark
+        background-color: $greenish
+        color: $whiteish
+
+  body
+    #fb-root
+    script
+      | (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
+
+    .main
+      h1.h1
+        |  T<br>a<br>o<br>
+        br
+        |  T<br>e<br>
+        br
+        |  C<br>h<br>i<br>n<br>g
+
+      .line
+        .line-top
+        .line-bottom
+
+      .credit
+        |  Written by Lao-tzu
+        br
+        |  Translation by S. Mitchell
+        br
+        |  Copyright &#169; 2016 
+        a href="https://www.twitter.com/@cairos_v" title="Twitter Profile"
+          | Carlos Vigil
+
+      article
+        |  The tao that can be told
+        br
+        |  is not the eternal Tao
+        br
+        |  The name that can be named
+        br
+        |  is not the eternal Name.
+        br
+        br
+        |  The unnamable is the eternally real.
+        br
+        |  Naming is the origin
+        br
+        |  of all particular things.
+        br
+        br
+        |  Free from desire, you realize the mystery.
+        br
+        |  Caught in desire, you see only the manifestations.
+        br
+        br
+        |  Yet mystery and manifestations
+        br
+        |  arise from the same source.
+        br
+        |  This source is called darkness.
+        br
+        br
+        |  Darkness within darkness.
+        br
+        |  The gateway to all understanding. 
+      .buttons
+        button.random
+          | Random Chapter
+        br
+        a.twitter-share-button href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&hashtag=codenewbies,freecodecamp&via=cairos_v&related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News"
+          | Tweet
+        br
+        .fb-share-button data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button" data-size="small" data-mobile-iframe="false"
+          a.fb-xfbml-parse-ignore target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;src=sdkpreparse"
+            | Share
+
+    coffee:
+      $(document).ready ->
+        book = []
+        chapter = 0
+
+        $.getJSON 'resources/tao-te-ching.json', (json) ->
+          $.each json, (key, val) ->
+            book.push val
+            return
+          $('article').html book[chapter]
+          return
+        console.log book
+
+        $('.random').on 'click', ->
+          chapter = Math.floor(Math.random() * (81 - 2)) + 2
+          $(this).toggleClass 'dark'
+          $('body').toggleClass 'light'
+          $('article').fadeOut 1364.000733092, ->
+            $('article').html book[chapter]
+            $('article').fadeIn 842.998813731
+            return
+
+          console.log 'Current chapter: ' + chapter + 1
+          console.log book[chapter]
+          return
+        return
+
+    script
+      | window.twttr = (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+          if (d.getElementById(id)) return t;
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "https://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+
+          t._e = [];
+          t.ready = function(f) {
+            t._e.push(f);
+          };
+
+          return t;
+        }(document, "script", "twitter-wjs"));
+        
+    script#__bs_script__
+      | //<![CDATA[ &&     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.14.0.js'><\/script>".replace("HOST", location.hostname)); && //]]>
