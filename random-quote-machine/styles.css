@@ -11,10 +11,16 @@
   background-color: #4f6845;
   color: #fde7af; }
 
+@media (min-width: 40em) and (max-width: 52em) {
+  .new {
+    background-image: none;
+    height: auto;
+    width: auto; } }
 html,
 body {
   background-color: #4f6845;
   color: #fde7af;
+  font-family: serif;
   height: 100%; }
 
 .h1 {
@@ -25,9 +31,12 @@ body {
 
 .new {
   background-color: #fde7af;
+  background-image: url("resources/leaf-sm.png");
   border: 0;
   border-radius: 2.6180339887px;
-  color: #4f6845; }
+  color: #4f6845;
+  height: 72px;
+  width: 100px; }
 
 a {
   color: #d48c21;
