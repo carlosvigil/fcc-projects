@@ -7,19 +7,43 @@
     <script type="text/javascript">
       $(document).ready(function() {
         if (navigator.geolocation) {
-
           navigator.geolocation.getCurrentPosition(
             function(position) {
-              var poCo = position.coords, lati = poCo.latitude, longi = poCo.longitude;
-              $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=' +lati+ '&lon=' +longi+ '&APPID=377f58c9485604f2914f58a16a7b2fb0',
+              var poCo = position.coords, lat = poCo.latitude, lon = poCo.longitude;
+              $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=' +lat+ '&lon=' +lon+ '&APPID=377f58c9485604f2914f58a16a7b2fb0',
                 function(json) {
-                  console.log(json, lati, longi);
-                  $('h1').html(json.name);
-                  $('h3').html('(within ' + poCo.accuracy + 'm)');
-                  $('h2').html('weather');
+                  console.log(json);
+                  var high = $('.hi-temp').html(json.main.temp_max);
+                  var current = $('.temp').html(json.main.temp);
+                  var low = $('.lo-temp').html(json.main.temp_min);
+              // USE UNIT FORMAT FROM API NOT THIS MASSIVE WASTE
+                  function tempConvert(kelvin, scale) {
+                    var convert = scale == 'f' ? (1.8 * (kelvin - 273) + 32) : kelvin - 273.15;
+                    return Math.floor(convert);
                 }
-              );
-            });
+
+                  $('.loc').html(json.name+', '+json.sys.country);
+                  $('.main').html(json.weather[0].main);
+                  $('.gist').html('It\'s a '+json.weather[0].description+'.');
+                  $('button').on('click', function() {
+                  });
+
+                  switch (current) {
+                    case current > 310:
+                      $('body').toggleClass('red')
+                      break;
+                    case current < 310 && current > 293:
+                      $('body').toggleClass('yellow')
+                      break;
+                    case current < 273:
+                      $('body').toggleClass('blue')
+                      break;
+                    default:
+                      $('body').toggleClass('green')
+                  }
+
+                });
+          });
         }
         else {
           $.alert("Geolocation unavailable.")
@@ -29,11 +53,20 @@
     <title>Get Your Local Weather</title>
   </head>
   <body>
-    <div class="main">
-
-      <h1></h1><h3 class="accu"></h3>
-      <h2></h2>
-
-    </div>
+    <h1 class="loc"></h1>
+    <h2 class="main"></h2>
+      <ul>
+        <li>
+          <h4>High</h4><h3 class="hi-temp"></h3>
+        </li>
+        <li>
+          <h4>Current</h4><h3 class="temp"></h3>
+        </li>
+        <li>
+          <h4>Low</h4><h3 class="lo-temp"></h3>
+        </li>
+      </ul>
+    <button>change scale</button>
+    <h4 class="gist"></h4>
   </body>
 </html>
