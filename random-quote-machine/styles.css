@@ -3,6 +3,11 @@
   border-right: 1px solid transparent;
   width: 1%; }
 
+.line {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  height: 1%; }
+
 .light {
   background-color: #fde7af;
   color: #4f6845; }
@@ -20,10 +25,10 @@ html,
 body {
   background-color: #4f6845;
   color: #fde7af;
-  font-family: serif;
-  height: 100%; }
+  font-family: serif; 
+  margin: auto; }
 
-.h1 {
+.f1, .f2 {
   color: #d48c21; }
 
 .credit {
@@ -51,3 +56,7 @@ a:hover {
 
 .line-bottom {
   border-top: 320px solid #fde7af; }
+
+.line {
+  border-left: 188px solid #fde7af;
+  border-right: 187px solid #fde7af; } 

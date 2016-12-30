@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  const at = $('.article');
+  const at = $('article');
   let bk = [];
   let ch = 0;
 

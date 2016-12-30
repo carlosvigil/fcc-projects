@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="w-100 h-100 dt tc">
   <head>
     <meta charset="utf-8">
     <meta content="http://codepen.io/Cairos/full/ZOwGXw/" property="og:url">
@@ -8,30 +8,33 @@
     <meta content="Get a random chapter from the Tao Te Ching"
           property="og:description">
     <title>Random Tao Te Ching Chapters</title>
-    <link href="https://npmcdn.com/basscss@8.0.2/css/basscss.min.css"
-          rel="stylesheet" type="text/css">
-    <link href="https://npmcdn.com/basscss-responsive-margin@1.1.0/css/responsive-margin.css"
-          rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="styles.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="tachyons.css">
   </head>
-  <body class="max-width-4 mx-auto pt4">
+  <body class="w-100 h-100 dtc v-mid mh9-l">
 
     <div id="fb-root"></div>
     <script>
       (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    <div class="table left xs-hide sm-col-1">
-      <div class="table-cell h1 center align-middle">
+    <span class="f2 dn-ns">Tao Te Ching</span>
+    <div class="mv1 dn-ns">
+      <div class="line"></div>
+    </div>
+
+    <div class="fl dn dt-ns">
+      <div class="f1 dn dtc-ns v-mid">
         T<br>a<br>o<br><br> T<br>e<br><br> C<br>h<br>i<br>n<br>g
       </div>
-      <div class="table-cell sm-hide">
+      <div class="dn dtc-l ph4">
         <div class="line-top"></div>
         <div class="line-bottom"></div>
       </div>
     </div>
 
-    <div class="article col-5 ml4 left h3">
+    <article class="fl ma3 measure-wide-l measure-ns measure-narrow f3-ns f4 tl">
       The tao that can be told<br>
       is not the eternal Tao<br>
       The name that can be named<br>
@@ -50,22 +53,20 @@
       <br>
       Darkness within darkness.<br>
       The gateway to all understanding.
-    </div>
+    </article>
 
-    <div class="flex col-5 right flex-wrap flex-column h4">
-      <div class="table mb2 flex-item">
-        <button class="new table-cell align-middle mt2 mr2">Random Chapter</button>
+    <aside class="f4">
+      <button class="new">Random Chapter</button>
 
-        <a class="twitter-share-button table-cell align-bottom"
-          href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a>
+      <a class="twitter-share-button"
+        href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a>
 
-        <div class="fb-share-button table-cell align-middle"
-          data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button"
-          data-mobile-iframe="false" data-size="small">
-          <a class="fb-xfbml-parse-ignore"
-            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;amp;src=sdkpreparse"
-            target="_blank">Share</a>
-        </div>
+      <div class="fb-share-button"
+        data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button"
+        data-mobile-iframe="false" data-size="small">
+        <a class="fb-xfbml-parse-ignore"
+          href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;amp;src=sdkpreparse"
+          target="_blank">Share</a>
       </div>
 
       <div class="credit">
@@ -75,8 +76,7 @@
         <a href="https://www.twitter.com/@cairos_v" title="Twitter Profile">
           Carlos Vigil</a>
       </div>
-
-    </div>
+    </aside>
 
     <script>
       window.twttr = (function(d, s, id) {
