@@ -1,72 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title></title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="styles/css/main.css" media="screen" title="no title" charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            function(position) {
-              var poCo = position.coords, lat = poCo.latitude, lon = poCo.longitude;
-              $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=' +lat+ '&lon=' +lon+ '&APPID=377f58c9485604f2914f58a16a7b2fb0',
-                function(json) {
-                  console.log(json);
-                  var high = $('.hi-temp').html(json.main.temp_max);
-                  var current = $('.temp').html(json.main.temp);
-                  var low = $('.lo-temp').html(json.main.temp_min);
-              // USE UNIT FORMAT FROM API NOT THIS MASSIVE WASTE
-                  function tempConvert(kelvin, scale) {
-                    var convert = scale == 'f' ? (1.8 * (kelvin - 273) + 32) : kelvin - 273.15;
-                    return Math.floor(convert);
-                }
-
-                  $('.loc').html(json.name+', '+json.sys.country);
-                  $('.main').html(json.weather[0].main);
-                  $('.gist').html('It\'s a '+json.weather[0].description+'.');
-                  $('button').on('click', function() {
-                  });
-
-                  switch (current) {
-                    case current > 310:
-                      $('body').toggleClass('red')
-                      break;
-                    case current < 310 && current > 293:
-                      $('body').toggleClass('yellow')
-                      break;
-                    case current < 273:
-                      $('body').toggleClass('blue')
-                      break;
-                    default:
-                      $('body').toggleClass('green')
-                  }
-
-                });
-          });
-        }
-        else {
-          $.alert("Geolocation unavailable.")
-        }
-      });
-    </script>
-    <title>Get Your Local Weather</title>
+    <script async type="application/javascript" src="main.js"></script>
   </head>
   <body>
-    <h1 class="loc"></h1>
-    <h2 class="main"></h2>
-      <ul>
-        <li>
-          <h4>High</h4><h3 class="hi-temp"></h3>
-        </li>
-        <li>
-          <h4>Current</h4><h3 class="temp"></h3>
-        </li>
-        <li>
-          <h4>Low</h4><h3 class="lo-temp"></h3>
-        </li>
-      </ul>
-    <button>change scale</button>
-    <h4 class="gist"></h4>
+    Hi
   </body>
 </html>
