@@ -69,15 +69,26 @@ function checkLanguage () {
   lang ? binarySearch(apiLangs, lang) : lang = 'en'
 }
 
-// SEARCH ALGO
-function binarySearch (arr, find) {
-  console.log('Starting binarySearch')
-  let mid = arr.length / 2
-  let midVal = arr[mid]
-  console.log(`Middle value is: ${midVal}`)
-  if (lang.indexOf(midVal) !== -1) {
+// SEARCH ALGO TODO: FINISH THIS
+function binarySearch () {
+  let start = 0
+  let stop = apiLangs.length - 1
+  let mid = Math.floor((stop + start) / 2)
 
+  console.log(`Starting binarySearch\nNav lang is: ${lang}\napiLangs middle value is: ${apiLangs[mid]}`)
+
+  while (lang.indexOf(apiLangs[mid]) === -1 && start < stop) {
+    // re-center
+    if (lang < apiLangs[mid]) {
+      stop = mid - 1
+    } else if (lang > apiLangs[mid]) {
+      start = mid + 1
+    }
+    mid = Math.floor((stop + start) / 2)
+    console.log(`apiLangs middle value is: ${apiLangs[mid]}`)
   }
+  lang.indexOf(apiLangs[mid]) ? lang = apiLangs[mid] : lang = 'en' // FIXME: lang should remain the same if true
+  console.log(`Lang sent to API is: ${lang}`)
 } // TODO: FINISH BINARY SEARCH
 
 // GEOLOCATION AVAILABLE ?
