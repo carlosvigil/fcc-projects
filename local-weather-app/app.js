@@ -20,6 +20,8 @@ const apiLangs = [
   'zh', 'zh-tw'
 ]
 let lang = window.navigator.language
+let scaleChar = ''
+let stored = window.sessionStorage['saveMeCalls']
 // WEATHER OBJ REFERENCE
 let weather = {
   latitude: 41.15787,
@@ -36,8 +38,6 @@ let weather = {
   },
   flags: { units: 'si' }
 }
-let stored = window.sessionStorage['saveMeCalls']
-let scaleChar = ''
 
 // IS DOC READY ?
 ;(function main (start) {
@@ -66,11 +66,7 @@ function start () {
 
 // IS PREFERRED LANGUAGE AVAILABLE ?
 function checkLanguage () {
-  if (lang) {
-    binarySearch(apiLangs, lang)
-  } else {
-    lang = 'en'
-  }
+  lang ? binarySearch(apiLangs, lang) : lang = 'en'
 }
 
 // SEARCH ALGO
@@ -103,21 +99,28 @@ function geoFailure (error) {
 // GEOLOCATION SUCCESS CALLBACK
 function geoSuccess (position) {
   const time = new Date(position.timestamp).toUTCString()
+  const url = urlBuilder(position)
+
+  // console report
+  console.log(`GEOLOCATION AVAILABLE
+    Latest: ${time}
+    Latitude: ${url.lat}
+    Longitude: ${url.lon}`)
+  // GET DATA
+  request.open('GET', url.url)
+  request.send()
+}
+
+// BUILD REQUEST URL
+function urlBuilder (position) {
   const lat = position.coords.latitude
   const lon = position.coords.longitude
   const cors = 'https://cors-anywhere.herokuapp.com/'
   const darkSky = 'https://api.darksky.net/forecast/'
   const queries = `?exclude=minutely,hourly,daily&lang=${lang}&units=auto`
   const url = `${cors}${darkSky}${key}/${lat},${lon}${queries}`
-
-  // console report
-  console.log(`GEOLOCATION AVAILABLE
-    Latest: ${time}
-    Latitude: ${lat}
-    Longitude: ${lon}`)
-  // GET DATA
-  request.open('GET', url)
-  request.send()
+  const obj = { lat, lon, url }
+  return obj
 }
 
 // API REQUEST CALLBACKS
@@ -142,12 +145,7 @@ request.onloadend = _ => {
   writeToDoc(weather)
 }
 
-// CHECK TEMP SCALE
-function tempScaleCheck () {
-  weather.flags.units === 'us' ? scaleChar = 'F' : scaleChar = 'C'
-}
-
-// FINALLY, WRITE TO THE DOC
+// WRITE TO THE DOC
 function writeToDoc () {
   const location = `${weather.latitude}, ${weather.longitude}`
   const current = weather.currently
@@ -164,4 +162,9 @@ function writeToDoc () {
   select('.temp').innerHTML = `${current.temperature}&#176;${scaleChar}`
   select('time').setAttribute('datetime', isoTime)
   select('time').innerHTML = utcTime
+}
+
+// CHECK TEMP SCALE
+function tempScaleCheck () {
+  weather.flags.units === 'us' ? scaleChar = 'F' : scaleChar = 'C'
 }
