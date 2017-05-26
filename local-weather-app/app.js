@@ -1,13 +1,15 @@
 'use strict'
 /* eslint-env browser */
 // TODO: add session storage comparison
+// TODO: add timezone offset to written time
+// TODO: add toggle switch for temperature scale
 
 // VARIABLES
 const select = element => document.querySelector(element)
 const geoOptions = {
   enableHighAccuracy: true,
   timeout: 15000,
-  maximumAge: 500
+  maximumAge: 900000
 }
 const key = '129f708692983c0e4c3192f214aaf598'
 const request = new XMLHttpRequest()
@@ -18,11 +20,21 @@ const apiLangs = [
   'zh', 'zh-tw'
 ]
 let lang = window.navigator.language
+// WEATHER OBJ REFERENCE
 let weather = {
-  latitude: '',
-  longitude: '',
-  currently: {summary: '', time: 0, temperature: 0},
-  flags: {units: ''}
+  latitude: 41.15787,
+  longitude: -4.1899,
+  timezone: 'Europe/Madrid',
+  offset: 2,
+  currently: {
+    time: 1495763125,
+    summary: 'Drizzle',
+    icon: 'rain',
+    precipType: 'rain',
+    temperature: 13.89,
+    apparentTemperature: 13.89
+  },
+  flags: { units: 'si' }
 }
 let stored = window.sessionStorage['saveMeCalls']
 let scaleChar = ''
@@ -40,6 +52,7 @@ let scaleChar = ''
 
 // GOOOOOO!!!!
 function start () {
+  console.log('START')
   if (stored) {
     console.log('Saving calls by using stored data.')
     weather = JSON.parse(stored)
@@ -110,12 +123,12 @@ function geoSuccess (position) {
 // API REQUEST CALLBACKS
 request.onloadstart = _ => console.log('LOAD START')
 request.onprogress = _ => console.log('LOADING')
-
+// GET THE DATA AND STORE IT
 request.onload = function () {
   if (this.status >= 200 && this.status < 400) {
     // parse it, and, store it
     weather = JSON.parse(this.response)
-    window.sessionStorage = this.response
+    window.sessionStorage['saveMeCalls'] = this.response
     // continue report
     console.log('Dark Sky API Data:')
     console.log(weather)
@@ -123,7 +136,7 @@ request.onload = function () {
     window.alert('An error occured on retrieving data.')
   }
 }
-
+// WRITE DATA TO THE DOCUMENT
 request.onloadend = _ => {
   console.log('LOAD END')
   writeToDoc(weather)
