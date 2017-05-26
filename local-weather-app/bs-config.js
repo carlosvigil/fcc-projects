@@ -27,6 +27,7 @@ module.exports = {
     'ignoreInitial': true
   },
   'server': true,
+  'https': true,
   'proxy': false,
   'port': 3000,
   'middleware': false,

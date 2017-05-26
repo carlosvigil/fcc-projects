@@ -1,7 +1,6 @@
 'use strict'
 /* eslint-env browser */
-// TODO: add session storage comparison to geoSuccess()
-// TODO: create array of available languages and sort/search against navi.lang
+// TODO: add session storage comparison
 
 // VARIABLES
 const select = element => document.querySelector(element)
@@ -12,9 +11,16 @@ const geoOptions = {
 }
 const key = '129f708692983c0e4c3192f214aaf598'
 const request = new XMLHttpRequest()
+const apiLangs = [
+  'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el',
+  'en', 'es', 'et', 'fr', 'hr', 'hu', 'id', 'it', 'is', 'kw', 'nb', 'nl',
+  'pl', 'pt', 'ru', 'sk', 'sl', 'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin',
+  'zh', 'zh-tw'
+]
 let lang = window.navigator.language
 let weather
 let stored = window.sessionStorage['saveMeCalls']
+let scaleChar = ''
 
 // IS DOC READY ?
 ;(function main (start) {
@@ -27,6 +33,7 @@ let stored = window.sessionStorage['saveMeCalls']
   }
 }(start))
 
+// GOOOOOO!!!!
 function start () {
   if (stored) {
     console.log('Saving calls by using stored data.')
@@ -40,10 +47,10 @@ function start () {
 // CHECK FOR LOCATION AVAILABILITY
 function checkNavigator () {
   if (window.navigator.geolocation) {
-    // YUP, GET LOCATION
+    // yup, get location
     window.navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure, geoOptions)
   } else {
-    // NOPE
+    // nope
     window.alert('Geolocation unavailable.')
   }
 }
@@ -56,14 +63,14 @@ function geoFailure (error) {
 // GEOLOCATION SUCCESS CALLBACK
 function geoSuccess (position) {
   const time = new Date(position.timestamp).toUTCString()
-  const lat = 34.9247557//position.coords.latitude
-  const lon = 143.1594287//position.coords.longitude
+  const lat = position.coords.latitude
+  const lon = position.coords.longitude
   const cors = 'https://cors-anywhere.herokuapp.com/'
   const darkSky = 'https://api.darksky.net/forecast/'
   const queries = `?exclude=minutely,hourly,daily&lang=${lang}&units=auto`
   const url = `${cors}${darkSky}${key}/${lat},${lon}${queries}`
 
-  // CONSOLE REPORT
+  // console report
   console.log(`GEOLOCATION AVAILABLE
     Latest: ${time}
     Latitude: ${lat}
@@ -78,10 +85,10 @@ request.onloadstart = _ => console.log('LOAD START')
 request.onprogress = _ => console.log('LOADING')
 request.onload = function () {
   if (this.status >= 200 && this.status < 400) {
-    // PARSE IT, AND, STORE IT
+    // parse it, and, store it
     weather = JSON.parse(this.response)
     window.sessionStorage = this.response
-    // CONTINUE REPORT
+    // continue report
     console.log('Dark Sky API Data:')
     console.log(weather)
   } else {
@@ -93,6 +100,39 @@ request.onloadend = _ => {
   writeToDoc(weather)
 }
 
+// IS PREFERRED LANGUAGE AVAILABLE ?
+;(function checkLanguage () {
+  if (lang) {
+    binarySearch(apiLangs, lang)
+  } else {
+    lang = 'en'
+  }
+}())
+
+// SEARCH ALGO
+function binarySearch (arr, find) {
+  console.log('Starting binarySearch')
+  let mid = arr.length / 2
+  let midVal = arr[mid]
+  console.log(`Middle value is: ${midVal}`)
+  if (langCompare(midVal, lang)) { // TODO: FINISH BINARY SEARCH
+
+  }
+}
+
+function langCompare (apiLang, lang) { // TODO: NOTE: MAY REPLACE WITH INDEXOF()
+
+}
+
+// CHECK TEMP SCALE
+function tempScaleCheck (data) {
+  if (data.flags.units === 'us') {
+    scaleChar = 'F'
+  } else {
+    scaleChar = 'C'
+  }
+}
+
 // FINALLY, WRITE TO THE DOC
 function writeToDoc (data) {
   const location = `${data.latitude}, ${data.longitude}`
@@ -100,11 +140,12 @@ function writeToDoc (data) {
   const isoTime = time.toISOString()
   const utcTime = time.toUTCString()
   const current = data.currently
+  // set scaleChar
+  tempScaleCheck(data)
 
   select('.location').innerHTML = location
   select('.summary').innerHTML = data.currently.summary
-  // todo: logic for celsius or farenheit, checking api flags
-  select('.temp').innerHTML = `${current.temperature}&#176;`
+  select('.temp').innerHTML = `${current.temperature}&#176;${scaleChar}`
   select('time').setAttribute('datetime', isoTime)
   select('time').innerHTML = utcTime
 }
