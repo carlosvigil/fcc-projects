@@ -1,7 +1,7 @@
 /* eslint-env browser */
-import lang from 'main'
+// import lang from 'main'
 
-const key = ''
+const key = '767b3baa2aca876fa6ea5e4fbd75228c'
 const request = new XMLHttpRequest()
 const apiLangs = [
   'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el',
@@ -44,4 +44,4 @@ request.onloadend = _ => {
   writeToDoc(weather)
 }
 
-export { urlBuilder, apiLangs }
+// export { urlBuilder, apiLangs }

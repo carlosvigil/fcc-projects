@@ -1,20 +1,22 @@
-import * as main from 'main'
 /* eslint-env browser */
+
+const sky = new Skycons({'color': 'white'})
 
 document.addEventListener('DOMContentLoaded', function loaded () {
   console.log('DOCUMENT IS READY')
-
+  sky.add('icon', Skycons.CLEAR_DAY)
+  sky.play()
 // GO!
   ;(async function start () {
     console.log('START')
-    if (main.stored) {
+    if (stored) {
       console.log('Saving calls by using stored data.')
-      main.weather = JSON.parse(main.stored)
-      main.checkLanguage()
-      main.writeToDoc(main.weather)
+      weather = JSON.parse(stored)
+      checkLanguage()
+      writeToDoc(main.weather)
     } else {
-      main.checkLanguage()
-      main.checkNavigator()
+      checkLanguage()
+      checkNavigator()
     }
   })()
 })
