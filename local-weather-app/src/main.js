@@ -4,7 +4,7 @@
 // TODO: add toggle switch for temperature scale
 // TODO: check if response has error obj; need to specify what errors occured
 
-// import * as api from 'api'
+import { apiLangs, request, urlBuilder } from './api.js'
 
 // VARIABLES
 const select = element => document.querySelector(element)
@@ -31,12 +31,11 @@ const tempObj = {
   },
   flags: { units: 'si' }
 }
-let stored = window.sessionStorage['saveMeCalls']
-let weather = stored || tempObj
-let scaleChar = stored ? weather.flags.units : ''
+let weather = window.sessionStorage['saveMeCalls'] || null
+let scaleChar = weather ? weather.flags.units : ''
 
 // IS PREFERRED LANGUAGE AVAILABLE ?
-async function checkLanguage () {
+function checkLanguage () {
   lang ? binarySearch(apiLangs, lang) : lang = 'en'
 }
 
@@ -133,4 +132,4 @@ function tempScaleCheck () {
   weather.flags.units === 'us' ? scaleChar = 'F' : scaleChar = 'C'
 }
 
-// export { weather, stored, lang, checkLanguage, checkNavigator, writeToDoc }
+export { weather, lang, checkLanguage, checkNavigator, writeToDoc }

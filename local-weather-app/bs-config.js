@@ -19,14 +19,16 @@ module.exports = {
       'port': 8080
     }
   },
-  'files': ['index.html', 'styles.css', 'app.js'],
+  'files': [
+    'dist'
+  ],
   'watchEvents': [
-    'change'
+    'change', 'add', 'addDir'
   ],
   'watchOptions': {
     'ignoreInitial': true
   },
-  'server': true,
+  'server': 'dist',
   'https': true,
   'proxy': false,
   'port': 3000,

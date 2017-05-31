@@ -1,4 +1,5 @@
 /* eslint-env browser */
+import { weather, checkLanguage, checkNavigator, writeToDoc } from './main.js'
 
 const sky = new Skycons({'color': 'white'})
 
@@ -7,13 +8,12 @@ document.addEventListener('DOMContentLoaded', function loaded () {
   sky.add('icon', Skycons.CLEAR_DAY)
   sky.play()
 // GO!
-  ;(async function start () {
+  ;(function start () {
     console.log('START')
-    if (stored) {
+    if (weather) {
       console.log('Saving calls by using stored data.')
-      weather = JSON.parse(stored)
-      checkLanguage()
-      writeToDoc(main.weather)
+      checkLanguage(weather)
+      writeToDoc(weather)
     } else {
       checkLanguage()
       checkNavigator()

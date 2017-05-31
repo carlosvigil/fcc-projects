@@ -1,14 +1,32 @@
 {
   "name": "local-weather-app",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "weather application for freecodecamp projects",
   "main": "index.html",
   "repository": "https://github.com/carlosvigil/fcc-projects/",
   "author": "Carlos Vigil <https://carlos.network/",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack --progress --config webpack.config.js",
+    "watch-pack": "webpack --progress --watch --config webpack.config.js",
+    "watch-browser": "browser-sync start -c 'bs-config.js'",
+    "dev": "npm-run-all --parallel watch-pack watch-browser"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "plugins": [
+      "html",
+      "standard",
+      "promise"
+    ]
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard"
+  },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "browser-sync": "^2.18.11",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-html": "^2.0.3",
@@ -16,12 +34,12 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "npm-run-all": "^4.0.2",
+    "webpack": "^2.6.1"
+  },
+  "optionalDependencies": {
+    "browser-sync": "^2.18.12",
     "stylelint": "^7.10.1",
     "stylelint-config-standard": "^16.0.0"
-  },
-  "stylelint": {
-    "extends": "stylelint-config-standard"
-  },
-  "dependencies": {
   }
 }
