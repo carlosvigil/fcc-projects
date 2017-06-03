@@ -71,8 +71,8 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = urlBuilder;
-/* harmony export (immutable) */ __webpack_exports__["b"] = getWeatherData;
+/* harmony export (immutable) */ __webpack_exports__["b"] = urlBuilder;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getWeatherData;
 /* eslint-env browser */
 
 // const apiLangs = [
@@ -81,8 +81,34 @@
 //   'pl', 'pt', 'ru', 'sk', 'sl', 'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin',
 //   'zh', 'zh-tw'
 // ]
-// const weather = JSON.parse(window.sessionStorage.saveMeCalls) || false
-// let scaleChar = weather ? weather.flags.units : ''
+const dummyData = {
+  'latitude': 41.400004027224064,
+  'longitude': -73.08102241601675,
+  'timezone': 'America/New_York',
+  'offset': -4,
+  'currently': {
+    'time': 1496461442,
+    'summary': 'Clear',
+    'icon': 'clear-night',
+    'nearestStormDistance': 9,
+    'nearestStormBearing': 129,
+    'precipIntensity': 0,
+    'precipProbability': 0,
+    'temperature': 52.26,
+    'apparentTemperature': 52.26,
+    'dewPoint': 39.38,
+    'humidity': 0.61,
+    'windSpeed': 4.91,
+    'windBearing': 315,
+    'visibility': 10,
+    'cloudCover': 0,
+    'pressure': 1015.07,
+    'ozone': 384.47
+  },
+  'flags': { 'units': 'us' }
+}
+/* harmony export (immutable) */ __webpack_exports__["c"] = dummyData;
+
 
 // NOTE: FUNCTIONAL CHECK 🆗
 // BUILD REQUEST URL
@@ -106,7 +132,6 @@ function getWeatherData (url) {
     // REQUEST CALLBACKS
     request.open('GET', url)
     request.onloadstart = _ => console.log('LOAD START')
-    request.onprogress = _ => console.log('*')
     request.onload = function requestOnload () {
       console.log(`${request.status}: ${request.statusText}`)
       if (request.status >= 200 && request.status < 400) {
@@ -121,11 +146,6 @@ function getWeatherData (url) {
   })
 }
 
-// CHECK TEMP SCALE
-// function tempScaleCheck () {
-//   weather.flags.units === 'us' ? scaleChar = 'F' : scaleChar = 'C'
-// }
-
 
 /***/ }),
 /* 1 */
@@ -133,6 +153,7 @@ function getWeatherData (url) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = checkNavigator;
+/* harmony export (immutable) */ __webpack_exports__["b"] = writeToDoc;
 /* eslint-env browser */
 // MAYBE: add session storage comparison
 //   if new position differs from stored position
@@ -140,10 +161,6 @@ function getWeatherData (url) {
 // FEATURE: add dark sky maps
 //   <script type='text/javascript' src='https://maps.darksky.net/@apparent_temperature,41.350,-432.848,9.js?embed=true&timeControl=true&fieldControl=true&defaultField=temperature&defaultUnits=_f'></script>
 // REQUIREMENT: add toggle switch for temperature scale
-
-// VARIABLES
-// const select = element => document.querySelector(element)
-
 
 // IS PREFERRED LANGUAGE AVAILABLE ?
 // SEARCH ALGO FIXME: SPLIT INTO TWO SEARCHES, Add AWAIT
@@ -182,6 +199,7 @@ function getWeatherData (url) {
 //   return console.log(`Lang sent to API is: ${lang}`)
 // }
 
+// NOTE: FUNCTIONAL CHECK 🆗
 // CHECK NAVIGATOR AND RETURN POSITION
 function checkNavigator () {
   const geo = window.navigator.geolocation
@@ -203,24 +221,24 @@ function checkNavigator () {
   }
 }
 
-// // WRITE TO THE DOC
-// function writeToDoc () {
-//   const location = `${weather.latitude}, ${weather.longitude}`
-//   const current = weather.currently
-//   const time = new Date(current.time * 1e3)
-//   const isoTime = time.toISOString()
-//   const utcTime = time.toUTCString()
-//   // set scaleChar
-//   tempScaleCheck()
-//   // TODO: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
-//   // select('.icon').setAttribute('id', iconStr)
-
-//   select('.location').innerHTML = location
-//   select('.summary').innerHTML = current.summary
-//   select('.temp').innerHTML = `${current.temperature}&#176;${scaleChar}`
-//   select('time').setAttribute('datetime', isoTime)
-//   select('time').innerHTML = utcTime
-// }
+// WRITE TO THE DOC
+function writeToDoc (weather) {
+  const elm = element => document.querySelector(element)
+  // TODO: GET TOWN, USE ADDRESS OVER COORDS
+  const location = `${weather.latitude}, ${weather.longitude}`
+  const current = weather.currently
+  const time = new Date(current.time * 1e3)
+  const isoTime = time.toISOString()
+  const utcTime = time.toUTCString()
+  let tempScale = weather.flags.units === 'us' ? 'F' : 'C'
+  // TODO: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
+  // select('.icon').setAttribute('id', iconStr)
+  elm('.location').innerHTML = location
+  elm('.summary').innerHTML = current.summary
+  elm('.temp').innerHTML = `${current.temperature}&#176;${tempScale}`
+  elm('time').setAttribute('datetime', isoTime)
+  elm('time').innerHTML = utcTime
+}
 
 // promiseWeather = Promise.all()
 //     .then(writeToDoc(storedData))
@@ -241,12 +259,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 window.addEventListener('load', async function loaded () {
   console.log('DOCUMENT IS READY')
-  try {
-    window.sessionStorage.saveMeCalls = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
-        .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* urlBuilder */])(pos))
-        .then(url => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* getWeatherData */])(url))
-    // writeToDoc(window.sessionStorage.saveMeCalls)
-  } catch (error) { console.log(error) }
+  let weather = window.sessionStorage.saveMeCalls || false
+
+  if (!weather) {
+    try {
+      window.sessionStorage.saveMeCalls = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
+          .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeatherData */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* urlBuilder */])(pos)))
+      weather = JSON.parse(window.sessionStorage.saveMeCalls)
+    } catch (error) {
+      console.log(error)
+      weather = __WEBPACK_IMPORTED_MODULE_0__api_js__["c" /* dummyData */]
+    }
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(weather)
+  } else __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(JSON.parse(weather))
 })
 
 // TODO: if no Nav rej Promise.all and use dummy data
