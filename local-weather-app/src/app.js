@@ -3,8 +3,9 @@ import { getWeatherData, urlBuilder, dummyData } from './api.js'
 import { checkNavigator, writeToDoc } from './browser.js'
 
 window.addEventListener('load', async function loaded () {
+  let weather = window.sessionStorage.saveMeCalls
+
   console.log('DOCUMENT IS READY')
-  let weather = window.sessionStorage.saveMeCalls || false
 
   if (!weather) {
     try {
@@ -13,10 +14,18 @@ window.addEventListener('load', async function loaded () {
       weather = JSON.parse(window.sessionStorage.saveMeCalls)
     } catch (error) {
       console.log(error)
+      console.log('Using dummy data.')
       weather = dummyData
     }
     writeToDoc(weather)
-  } else writeToDoc(JSON.parse(weather))
+  } else {
+    console.log('Using session storage.')
+    writeToDoc(JSON.parse(weather))
+  }
+  return console.log('DONE')
 })
 
-// TODO: if no Nav rej Promise.all and use dummy data
+// promiseWeather = Promise.all()
+//     .then(writeToDoc(storedData))
+//     .catch(error => console.log(error))
+// if no Nav rej Promise.all and use dummy data

@@ -33,7 +33,7 @@ export const dummyData = {
   'flags': { 'units': 'us' }
 }
 
-// NOTE: FUNCTIONAL CHECK 🆗
+// FUNCTIONAL CHECK 🆗
 // BUILD REQUEST URL
 export function urlBuilder (position) {
   const lang = 'en'
@@ -47,7 +47,7 @@ export function urlBuilder (position) {
   return url
 }
 
-// NOTE: FUNCTIONAL CHECK 🆗
+// FUNCTIONAL CHECK 🆗
 // CALL API TO GET DATA
 export function getWeatherData (url) {
   return new Promise(function promiseResponse (resolve, reject) {

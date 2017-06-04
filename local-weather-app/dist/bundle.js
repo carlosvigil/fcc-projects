@@ -240,10 +240,6 @@ function writeToDoc (weather) {
   elm('time').innerHTML = utcTime
 }
 
-// promiseWeather = Promise.all()
-//     .then(writeToDoc(storedData))
-//     .catch(error => console.log(error))
-
 
 /***/ }),
 /* 2 */
@@ -258,8 +254,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 window.addEventListener('load', async function loaded () {
+  let weather = window.sessionStorage.saveMeCalls
+
   console.log('DOCUMENT IS READY')
-  let weather = window.sessionStorage.saveMeCalls || false
 
   if (!weather) {
     try {
@@ -268,13 +265,21 @@ window.addEventListener('load', async function loaded () {
       weather = JSON.parse(window.sessionStorage.saveMeCalls)
     } catch (error) {
       console.log(error)
+      console.log('Using dummy data.')
       weather = __WEBPACK_IMPORTED_MODULE_0__api_js__["c" /* dummyData */]
     }
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(weather)
-  } else __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(JSON.parse(weather))
+  } else {
+    console.log('Using session storage.')
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(JSON.parse(weather))
+  }
+  return console.log('DONE')
 })
 
-// TODO: if no Nav rej Promise.all and use dummy data
+// promiseWeather = Promise.all()
+//     .then(writeToDoc(storedData))
+//     .catch(error => console.log(error))
+// if no Nav rej Promise.all and use dummy data
 
 
 /***/ })
