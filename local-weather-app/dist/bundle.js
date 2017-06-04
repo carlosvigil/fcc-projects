@@ -71,16 +71,20 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = urlBuilder;
-/* harmony export (immutable) */ __webpack_exports__["a"] = getWeatherData;
+/* unused harmony export apiLangs */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return dummyData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return urlBuilder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getWeatherData; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__langSearch_js__ = __webpack_require__(3);
 /* eslint-env browser */
 
-// const apiLangs = [
-//   'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el',
-//   'en', 'es', 'et', 'fr', 'hr', 'hu', 'id', 'it', 'is', 'kw', 'nb', 'nl',
-//   'pl', 'pt', 'ru', 'sk', 'sl', 'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin',
-//   'zh', 'zh-tw'
-// ]
+
+const apiLangs = [
+  'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el', 'en', 'es', 'et', 'fr',
+  'hr', 'hu', 'id', 'it', 'is', 'kw', 'nb', 'nl', 'pl', 'pt', 'ru', 'sk', 'sl',
+  'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin', 'zh', 'zh-tw'
+]
+
 const dummyData = {
   'latitude': 41.400004027224064,
   'longitude': -73.08102241601675,
@@ -90,30 +94,16 @@ const dummyData = {
     'time': 1496461442,
     'summary': 'Clear',
     'icon': 'clear-night',
-    'nearestStormDistance': 9,
-    'nearestStormBearing': 129,
-    'precipIntensity': 0,
-    'precipProbability': 0,
-    'temperature': 52.26,
-    'apparentTemperature': 52.26,
-    'dewPoint': 39.38,
-    'humidity': 0.61,
-    'windSpeed': 4.91,
-    'windBearing': 315,
-    'visibility': 10,
-    'cloudCover': 0,
-    'pressure': 1015.07,
-    'ozone': 384.47
+    'temperature': 52.26
   },
   'flags': { 'units': 'us' }
 }
-/* harmony export (immutable) */ __webpack_exports__["c"] = dummyData;
 
-
-// NOTE: FUNCTIONAL CHECK 🆗
+// FUNCTIONAL CHECK 🆗
 // BUILD REQUEST URL
 function urlBuilder (position) {
-  const lang = 'en'
+  const browserLang = window.navigator.language.toLowerCase()
+  const lang = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang)
   const key = '767b3baa2aca876fa6ea5e4fbd75228c'
   const lat = position.coords.latitude
   const lon = position.coords.longitude
@@ -124,7 +114,7 @@ function urlBuilder (position) {
   return url
 }
 
-// NOTE: FUNCTIONAL CHECK 🆗
+// FUNCTIONAL CHECK 🆗
 // CALL API TO GET DATA
 function getWeatherData (url) {
   return new Promise(function promiseResponse (resolve, reject) {
@@ -147,91 +137,51 @@ function getWeatherData (url) {
 }
 
 
+
+
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = checkNavigator;
-/* harmony export (immutable) */ __webpack_exports__["b"] = writeToDoc;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return checkNavigator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return writeToDoc; });
 /* eslint-env browser */
-// MAYBE: add session storage comparison
-//   if new position differs from stored position
+// REQUIREMENT: add toggle switch for temperature scale
+// FEATURE: add session storage comparison
+//   "if new position differs from stored position"
 // FEATURE: add timezone offset to written time
 // FEATURE: add dark sky maps
 //   <script type='text/javascript' src='https://maps.darksky.net/@apparent_temperature,41.350,-432.848,9.js?embed=true&timeControl=true&fieldControl=true&defaultField=temperature&defaultUnits=_f'></script>
-// REQUIREMENT: add toggle switch for temperature scale
 
-// IS PREFERRED LANGUAGE AVAILABLE ?
-// SEARCH ALGO FIXME: SPLIT INTO TWO SEARCHES, Add AWAIT
-// async function binarySearchLanguage () {
-//   let lang = window.navigator.language.toLowerCase()
-//   let startIndex = 0
-//   let stopIndex = apiLangs.length - 1
-//   let mid = Math.floor((stopIndex + startIndex) / 2)
-//   let isLang = apiLangs[mid].indexOf(lang) !== -1
-//   let containsLang = lang.indexOf(apiLangs[mid]) !== -1
-
-//   console.log('Starting binarySearch')
-//   console.log(`Nav lang is: ${lang}, apiLangs middle value is: ${apiLangs[mid]}`)
-//   while ((!isLang && !containsLang) && startIndex < stopIndex) {
-//     // re-center
-//     if (lang < apiLangs[mid]) {
-//       stopIndex = mid - 1
-//     } else if (lang > apiLangs[mid]) {
-//       startIndex = mid + 1
-//     }
-//     mid = Math.floor((stopIndex + startIndex) / 2)
-//     isLang = apiLangs.indexOf(lang) !== -1
-//     containsLang = lang.indexOf(apiLangs[mid]) !== -1
-//     console.log(`apiLangs middle value is: ${apiLangs[mid]}`)
-//   }
-
-//   if (isLang) {
-//     console.log('Language is available.')
-//   } else if (containsLang) {
-//     lang = apiLangs[mid]
-//     console.log(`Preferred localization unavailable, setting to default: ${lang}.`)
-//   } else {
-//     lang = 'en'
-//     console.log('Preferred language unavailable, setting to English.')
-//   }
-//   return console.log(`Lang sent to API is: ${lang}`)
-// }
-
-// NOTE: FUNCTIONAL CHECK 🆗
+// FUNCTIONAL CHECK 🆗
 // CHECK NAVIGATOR AND RETURN POSITION
 function checkNavigator () {
   const geo = window.navigator.geolocation
   // GEOLOCATION AVAILABLE ?
   if (geo) {
     // yup, promise location
+    console.log('Geolocation is available.')
     return new Promise(function promiseLocation (resolve, reject) {
-      const geoOptions = {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 900000
-      }
-      // get location
+      const geoOptions = { enableHighAccuracy: true, timeout: 15000, maximumAge: 900000 }
       geo.getCurrentPosition(pos => resolve(pos), err => reject(err), geoOptions)
     })
   } else {
-    // nope
     return window.alert('Geolocation unavailable.')
   }
 }
 
+// FUNCTIONAL CHECK ❔
 // WRITE TO THE DOC
 function writeToDoc (weather) {
   const elm = element => document.querySelector(element)
-  // TODO: GET TOWN, USE ADDRESS OVER COORDS
   const location = `${weather.latitude}, ${weather.longitude}`
   const current = weather.currently
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
   const utcTime = time.toUTCString()
   let tempScale = weather.flags.units === 'us' ? 'F' : 'C'
-  // TODO: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
+  // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
   elm('.location').innerHTML = location
   elm('.summary').innerHTML = current.summary
@@ -239,6 +189,8 @@ function writeToDoc (weather) {
   elm('time').setAttribute('datetime', isoTime)
   elm('time').innerHTML = utcTime
 }
+
+
 
 
 /***/ }),
@@ -280,6 +232,60 @@ window.addEventListener('load', async function loaded () {
 //     .then(writeToDoc(storedData))
 //     .catch(error => console.log(error))
 // if no Nav rej Promise.all and use dummy data
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = setLanguage;
+// FEATURE: IS PREFERRED LANGUAGE & DIALECT AVAILABLE ?
+
+function binarySearch (arr, val) {
+  let lowIndex = 0
+  let highIndex = arr.length - 1
+  let midIndex = Math.floor((lowIndex + highIndex) / 2)
+  let exact = arr[midIndex].indexOf(val) === 0
+  let fuzzyCheck = val.indexOf(arr[midIndex]) === 0
+  let fuzzyMatch
+  // search
+  while (!exact && lowIndex < highIndex) {
+    // BUG: May iterate through all fuzzy matches instead of keeping best match
+    fuzzyMatch = fuzzyCheck ? arr[midIndex] : null
+    // re-center
+    if (val < arr[midIndex]) {
+      highIndex = midIndex - 1
+    } else if (val > arr[midIndex]) {
+      lowIndex = midIndex + 1
+    }
+    // reset checks
+    midIndex = Math.floor((lowIndex + highIndex) / 2)
+    exact = arr[midIndex].indexOf(val) === 0
+    fuzzyCheck = val.indexOf(arr[midIndex]) === 0
+  }
+  // return results
+  if (exact) {
+    return [2]
+  } else if (fuzzyMatch) {
+    return [1, fuzzyMatch]
+  } else return 0
+}
+// let dev know if the preferred language is available; return string for api
+function setLanguage (arr, lang) {
+  const results = binarySearch(arr, lang)
+  switch (results[0]) {
+    case 2:
+      console.log(`Preferred language is available. Add '${lang}' to api call.`)
+      return lang
+    case 1:
+      console.log(`Preferred language dialect is unavailable. Add '${results[1]}' to api call.`)
+      return results[1]
+    default:
+      console.log('Preferred language is unavailable. Add \'en\' to api call.')
+      return 'en'
+  }
+}
 
 
 /***/ })
