@@ -2,11 +2,11 @@
 import { getWeatherData, urlBuilder, dummyData } from './api.js'
 import { checkNavigator, writeToDoc } from './browser.js'
 
+// Wait for everything to load, avoiding document timing issues
 window.addEventListener('load', async function loaded () {
   let weather = window.sessionStorage.saveMeCalls
 
-  console.log('DOCUMENT IS READY')
-
+  // don't make unnecessary calls, api is free; and, if any error, use old data
   if (!weather) {
     try {
       window.sessionStorage.saveMeCalls = await checkNavigator()

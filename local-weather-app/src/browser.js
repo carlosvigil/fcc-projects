@@ -7,7 +7,8 @@
 //   <script type='text/javascript' src='https://maps.darksky.net/@apparent_temperature,41.350,-432.848,9.js?embed=true&timeControl=true&fieldControl=true&defaultField=temperature&defaultUnits=_f'></script>
 
 // FUNCTIONAL CHECK 🆗
-// CHECK NAVIGATOR AND RETURN POSITION
+/* Check if location services are available to avoid uneccessary processing,
+*  and if they are use them to provide the API call a set of coordinates. */
 function checkNavigator () {
   const geo = window.navigator.geolocation
   // GEOLOCATION AVAILABLE ?
@@ -24,10 +25,10 @@ function checkNavigator () {
 }
 
 // FUNCTIONAL CHECK ❔
-// WRITE TO THE DOC
+// Present the data returned from the rest of the application to the UI
 function writeToDoc (weather) {
   const elm = element => document.querySelector(element)
-  const location = `${weather.latitude}, ${weather.longitude}`
+  const coordinates = `${weather.latitude}, ${weather.longitude}`
   const current = weather.currently
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
@@ -35,7 +36,7 @@ function writeToDoc (weather) {
   let tempScale = weather.flags.units === 'us' ? 'F' : 'C'
   // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
-  elm('.location').innerHTML = location
+  elm('.location').innerHTML = coordinates
   elm('.summary').innerHTML = current.summary
   elm('.temp').innerHTML = `${current.temperature}&#176;${tempScale}`
   elm('time').setAttribute('datetime', isoTime)

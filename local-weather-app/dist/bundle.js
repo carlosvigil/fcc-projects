@@ -155,7 +155,8 @@ function getWeatherData (url) {
 //   <script type='text/javascript' src='https://maps.darksky.net/@apparent_temperature,41.350,-432.848,9.js?embed=true&timeControl=true&fieldControl=true&defaultField=temperature&defaultUnits=_f'></script>
 
 // FUNCTIONAL CHECK 🆗
-// CHECK NAVIGATOR AND RETURN POSITION
+/* Check if location services are available to avoid uneccessary processing,
+*  and if they are use them to provide the API call a set of coordinates. */
 function checkNavigator () {
   const geo = window.navigator.geolocation
   // GEOLOCATION AVAILABLE ?
@@ -172,10 +173,10 @@ function checkNavigator () {
 }
 
 // FUNCTIONAL CHECK ❔
-// WRITE TO THE DOC
+// Present the data returned from the rest of the application to the UI
 function writeToDoc (weather) {
   const elm = element => document.querySelector(element)
-  const location = `${weather.latitude}, ${weather.longitude}`
+  const coordinates = `${weather.latitude}, ${weather.longitude}`
   const current = weather.currently
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
@@ -183,7 +184,7 @@ function writeToDoc (weather) {
   let tempScale = weather.flags.units === 'us' ? 'F' : 'C'
   // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
-  elm('.location').innerHTML = location
+  elm('.location').innerHTML = coordinates
   elm('.summary').innerHTML = current.summary
   elm('.temp').innerHTML = `${current.temperature}&#176;${tempScale}`
   elm('time').setAttribute('datetime', isoTime)
@@ -205,11 +206,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+// Wait for everything to load, avoiding document timing issues
 window.addEventListener('load', async function loaded () {
   let weather = window.sessionStorage.saveMeCalls
 
-  console.log('DOCUMENT IS READY')
-
+  // don't make unnecessary calls, api is free; and, if any error, use old data
   if (!weather) {
     try {
       window.sessionStorage.saveMeCalls = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
@@ -242,6 +243,7 @@ window.addEventListener('load', async function loaded () {
 /* harmony export (immutable) */ __webpack_exports__["a"] = setLanguage;
 // FEATURE: IS PREFERRED LANGUAGE & DIALECT AVAILABLE ?
 
+// It's faster to use a search other than linear, but no benchmarks for this yet
 function binarySearch (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
@@ -249,29 +251,29 @@ function binarySearch (arr, val) {
   let exact = arr[midIndex].indexOf(val) === 0
   let fuzzyCheck = val.indexOf(arr[midIndex]) === 0
   let fuzzyMatch
-  // search
+
   while (!exact && lowIndex < highIndex) {
     // BUG: May iterate through all fuzzy matches instead of keeping best match
     fuzzyMatch = fuzzyCheck ? arr[midIndex] : null
-    // re-center
+    // change the center to reflect the decided halve of the arr
     if (val < arr[midIndex]) {
       highIndex = midIndex - 1
     } else if (val > arr[midIndex]) {
       lowIndex = midIndex + 1
     }
-    // reset checks
+    // these variables don't update unless reassigned
     midIndex = Math.floor((lowIndex + highIndex) / 2)
     exact = arr[midIndex].indexOf(val) === 0
     fuzzyCheck = val.indexOf(arr[midIndex]) === 0
   }
-  // return results
+
   if (exact) {
     return [2]
   } else if (fuzzyMatch) {
     return [1, fuzzyMatch]
   } else return 0
 }
-// let dev know if the preferred language is available; return string for api
+// to provide a better UX send a best matched language string to the calling f()
 function setLanguage (arr, lang) {
   const results = binarySearch(arr, lang)
   switch (results[0]) {
