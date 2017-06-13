@@ -33,12 +33,14 @@ function writeToDoc (weather) {
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
   const utcTime = time.toUTCString()
-  let tempScale = weather.flags.units === 'us' ? 'F' : 'C'
+
+  if (weather.flags.units === 'us') elm('#switch').checked = true
+  
   // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
   elm('.location').innerHTML = coordinates
   elm('.summary').innerHTML = current.summary
-  elm('.temp').innerHTML = `${current.temperature}&#176;${tempScale}`
+  elm('.temp').innerHTML = `${current.temperature}&#176;`
   elm('time').setAttribute('datetime', isoTime)
   elm('time').innerHTML = utcTime
 }
