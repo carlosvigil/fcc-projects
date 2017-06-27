@@ -35,7 +35,7 @@ function writeToDoc (weather) {
   const utcTime = time.toUTCString()
 
   if (weather.flags.units === 'us') elm('#switch').checked = true
-  
+
   // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
   elm('.location').innerHTML = coordinates
@@ -43,6 +43,19 @@ function writeToDoc (weather) {
   elm('.temp').innerHTML = `${current.temperature}&#176;`
   elm('time').setAttribute('datetime', isoTime)
   elm('time').innerHTML = utcTime
+}
+
+function toggleScale () {
+  const toggle = document.querySelector('#switch')
+  let checked = toggle.checked === true
+
+  toggle.addEventListener("click", function() {
+    if (checked) {
+      return
+    } else {
+
+    }
+  })
 }
 
 export { checkNavigator, writeToDoc }
