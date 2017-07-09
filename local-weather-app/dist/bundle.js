@@ -72,8 +72,8 @@
 
 "use strict";
 /* unused harmony export apiLangs */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return dummyData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return urlBuilder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dummyData; });
+/* unused harmony export darkSkyUrlBuilder */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getWeatherData; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__langSearch_js__ = __webpack_require__(3);
 /* eslint-env browser */
@@ -101,7 +101,13 @@ const dummyData = {
 
 // FUNCTIONAL CHECK 🆗
 // BUILD REQUEST URL
-function urlBuilder (position) {
+const urlParts = {
+  browserLang: window.navigator.language.toLowerCase(),
+  lang: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang),
+  lat: position.coords.latitude
+}
+
+function darkSkyUrlBuilder (position) {
   const browserLang = window.navigator.language.toLowerCase()
   const lang = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang)
   const key = '767b3baa2aca876fa6ea5e4fbd75228c'
@@ -134,6 +140,19 @@ function getWeatherData (url) {
     request.onloadend = _ => console.log('LOAD END')
     request.send()
   })
+}
+
+function googleMapsUrlBuilder (position) {
+  const browserLang = window.navigator.language.toLowerCase()
+  const lang = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang)
+  const key = '767b3baa2aca876fa6ea5e4fbd75228c'
+  const lat = position.coords.latitude
+  const lon = position.coords.longitude
+  const cors = 'https://cors-anywhere.herokuapp.com/'
+  const darkSky = 'https://api.darksky.net/forecast/'
+  const queries = `?exclude=minutely,hourly,daily&lang=${lang}&units=auto`
+  const url = `${cors}${darkSky}${key}/${lat},${lon}${queries}`
+  return url;
 }
 
 
@@ -225,20 +244,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 window.addEventListener('load', async function loaded () {
   let weather = window.sessionStorage.saveMeCalls
 
-  // don't make unnecessary calls, api is free; and, if any error, use old data
+  // don't make unnecessary calls
   if (!weather) {
     try {
       window.sessionStorage.saveMeCalls = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
-          .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeatherData */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* urlBuilder */])(pos)))
+          .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeatherData */])(darkSkyUrlBuilder(pos)))
       weather = JSON.parse(window.sessionStorage.saveMeCalls)
     } catch (error) {
       console.log(error)
-      console.log('Using dummy data.')
-      weather = __WEBPACK_IMPORTED_MODULE_0__api_js__["c" /* dummyData */]
+      console.log('Using placeholder data.')
+      weather = __WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* dummyData */]
     }
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(weather)
   } else {
-    console.log('Using session storage.')
+    console.log('Using data from session storage.')
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(JSON.parse(weather))
   }
   return console.log('DONE')
@@ -258,7 +277,7 @@ window.addEventListener('load', async function loaded () {
 /* harmony export (immutable) */ __webpack_exports__["a"] = setLanguage;
 // FEATURE: IS PREFERRED LANGUAGE & DIALECT AVAILABLE ?
 
-// It's faster to use a search other than linear, but no benchmarks for this yet
+// It might be faster to use a search other than linear, but no benchmarks for this yet
 function binarySearch (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
@@ -281,14 +300,14 @@ function binarySearch (arr, val) {
     exact = arr[midIndex].indexOf(val) === 0
     fuzzyCheck = val.indexOf(arr[midIndex]) === 0
   }
-
+  // return search results
   if (exact) {
     return [2]
   } else if (fuzzyMatch) {
     return [1, fuzzyMatch]
   } else return 0
 }
-// to provide a better UX send a best matched language string to the calling f()
+// to provide a better UX, send best matched language string to the calling f()
 function setLanguage (arr, lang) {
   const results = binarySearch(arr, lang)
   switch (results[0]) {
@@ -296,10 +315,10 @@ function setLanguage (arr, lang) {
       console.log(`Preferred language is available. Add '${lang}' to api call.`)
       return lang
     case 1:
-      console.log(`Preferred language dialect is unavailable. Add '${results[1]}' to api call.`)
+      console.log(`Preferred language dialect (${lang}) is unavailable. Add '${results[1]}' to api call.`)
       return results[1]
     default:
-      console.log('Preferred language is unavailable. Add \'en\' to api call.')
+      console.log('Preferred language (${lang}) is unavailable. Add \'en\' to api call.')
       return 'en'
   }
 }
