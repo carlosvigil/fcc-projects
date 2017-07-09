@@ -72,9 +72,10 @@
 
 "use strict";
 /* unused harmony export apiLangs */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return dummyData; });
-/* unused harmony export darkSkyUrlBuilder */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getWeatherData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return dummyData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return darkSkyUrlBuilder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return googleMapsUrlBuilder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return callApi; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__langSearch_js__ = __webpack_require__(3);
 /* eslint-env browser */
 
@@ -100,59 +101,54 @@ const dummyData = {
 }
 
 // FUNCTIONAL CHECK 🆗
-// BUILD REQUEST URL
-const urlParts = {
-  browserLang: window.navigator.language.toLowerCase(),
-  lang: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang),
-  lat: position.coords.latitude
+function urlParts (position) {
+  const lang = window.navigator.language.toLowerCase()
+  const loc = `${position.coords.latitude},${position.coords.longitude}`
+  return { lang, loc }
 }
 
+// FUNCTIONAL CHECK 🆗
 function darkSkyUrlBuilder (position) {
-  const browserLang = window.navigator.language.toLowerCase()
-  const lang = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang)
+  const browserBits = urlParts(position)
+  const lang = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserBits.lang)
   const key = '767b3baa2aca876fa6ea5e4fbd75228c'
-  const lat = position.coords.latitude
-  const lon = position.coords.longitude
   const cors = 'https://cors-anywhere.herokuapp.com/'
   const darkSky = 'https://api.darksky.net/forecast/'
   const queries = `?exclude=minutely,hourly,daily&lang=${lang}&units=auto`
-  const url = `${cors}${darkSky}${key}/${lat},${lon}${queries}`
+  const url = `${cors}${darkSky}${key}/${browserBits.loc}${queries}`
+  return url
+}
+
+// FUNCTIONAL CHECK 🆗
+function googleMapsUrlBuilder (position) {
+  const browserBits = urlParts(position)
+  // const key = ''
+  const googleMaps = 'https://maps.googleapis.com/maps/api/geocode/json'
+  const parameters = `?latlng=${browserBits.loc}&language=${browserBits.browserLang}`
+  const url = `${googleMaps}${parameters}`
   return url
 }
 
 // FUNCTIONAL CHECK 🆗
 // CALL API TO GET DATA
-function getWeatherData (url) {
+function callApi (url, service) {
   return new Promise(function promiseResponse (resolve, reject) {
     const request = new XMLHttpRequest()
     // REQUEST CALLBACKS
     request.open('GET', url)
-    request.onloadstart = _ => console.log('LOAD START')
+    request.onloadstart = _ => console.log(`${service}: LOAD START`)
     request.onload = function requestOnload () {
-      console.log(`${request.status}: ${request.statusText}`)
+      console.log(`${service}: ${request.status}, ${request.statusText}`)
       if (request.status >= 200 && request.status < 400) {
         resolve(request.response)
       } else {
         reject(Error(request.status, request.statusText))
       }
     }
-    request.onerror = _ => reject(Error('Network error on getting data.'))
-    request.onloadend = _ => console.log('LOAD END')
+    request.onerror = _ => reject(Error(`${service}: Network error on getting data.`))
+    request.onloadend = _ => console.log(`${service}: LOAD END`)
     request.send()
   })
-}
-
-function googleMapsUrlBuilder (position) {
-  const browserLang = window.navigator.language.toLowerCase()
-  const lang = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__langSearch_js__["a" /* default */])(apiLangs, browserLang)
-  const key = '767b3baa2aca876fa6ea5e4fbd75228c'
-  const lat = position.coords.latitude
-  const lon = position.coords.longitude
-  const cors = 'https://cors-anywhere.herokuapp.com/'
-  const darkSky = 'https://api.darksky.net/forecast/'
-  const queries = `?exclude=minutely,hourly,daily&lang=${lang}&units=auto`
-  const url = `${cors}${darkSky}${key}/${lat},${lon}${queries}`
-  return url;
 }
 
 
@@ -191,11 +187,13 @@ function checkNavigator () {
   }
 }
 
+// TODO: Write address
 // FUNCTIONAL CHECK ❔
 // Present the data returned from the rest of the application to the UI
-function writeToDoc (weather) {
+function writeToDoc (weather, address) {
   const elm = element => document.querySelector(element)
-  const coordinates = `${weather.latitude}, ${weather.longitude}`
+  // const coordinates = `${weather.latitude}, ${weather.longitude}`
+  const addressString = address.results[1].formatted_address
   const current = weather.currently
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
@@ -205,25 +203,25 @@ function writeToDoc (weather) {
 
   // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
-  elm('.location').innerHTML = coordinates
+  elm('.location').innerHTML = addressString
   elm('.summary').innerHTML = current.summary
   elm('.temp').innerHTML = `${current.temperature}&#176;`
   elm('time').setAttribute('datetime', isoTime)
   elm('time').innerHTML = utcTime
 }
 
-function toggleScale () {
-  const toggle = document.querySelector('#switch')
-  let checked = toggle.checked === true
+// function toggleScale () {
+//   const toggle = document.querySelector('#switch')
+//   let checked = toggle.checked === true
 
-  toggle.addEventListener("click", function() {
-    if (checked) {
-      return
-    } else {
+//   toggle.addEventListener("click", function() {
+//     if (checked) {
+//       return
+//     } else {
 
-    }
-  })
-}
+//     }
+//   })
+// }
 
 
 
@@ -242,23 +240,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 // Wait for everything to load, avoiding document timing issues
 window.addEventListener('load', async function loaded () {
-  let weather = window.sessionStorage.saveMeCalls
+  let weather = window.sessionStorage.darkSky
+  let address = window.sessionStorage.googleMaps
 
   // don't make unnecessary calls
   if (!weather) {
     try {
-      window.sessionStorage.saveMeCalls = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
-          .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeatherData */])(darkSkyUrlBuilder(pos)))
-      weather = JSON.parse(window.sessionStorage.saveMeCalls)
+      window.sessionStorage.googleMaps = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
+          .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* callApi */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* googleMapsUrlBuilder */])(pos), 'Google Maps'))
+      window.sessionStorage.darkSky = await __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["a" /* checkNavigator */])()
+          .then(pos => __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* callApi */])(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__api_js__["c" /* darkSkyUrlBuilder */])(pos), 'Dark Sky'))
+      weather = JSON.parse(window.sessionStorage.darkSky)
+      address = JSON.parse(window.sessionStorage.googleMaps)
     } catch (error) {
       console.log(error)
       console.log('Using placeholder data.')
-      weather = __WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* dummyData */]
+      weather = __WEBPACK_IMPORTED_MODULE_0__api_js__["d" /* dummyData */]
+      address = 'Seymour, CT, USA'
     }
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(weather)
   } else {
     console.log('Using data from session storage.')
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(JSON.parse(weather))
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__browser_js__["b" /* writeToDoc */])(JSON.parse(weather), JSON.parse(address))
   }
   return console.log('DONE')
 })

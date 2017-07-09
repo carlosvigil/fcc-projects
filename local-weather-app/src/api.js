@@ -22,54 +22,54 @@ const dummyData = {
 }
 
 // FUNCTIONAL CHECK 🆗
-// BUILD REQUEST URL
 function urlParts (position) {
-  const browserLang = window.navigator.language.toLowerCase()
-  const lang = setLanguage(apiLangs, browserLang)
-  const lat = position.coords.latitude
-  const lon = position.coords.longitude
-  return { browserLang, lang, lat, lon }
+  const lang = window.navigator.language.toLowerCase()
+  const loc = `${position.coords.latitude},${position.coords.longitude}`
+  return { lang, loc }
 }
 
+// FUNCTIONAL CHECK 🆗
 function darkSkyUrlBuilder (position) {
   const browserBits = urlParts(position)
+  const lang = setLanguage(apiLangs, browserBits.lang)
   const key = '767b3baa2aca876fa6ea5e4fbd75228c'
   const cors = 'https://cors-anywhere.herokuapp.com/'
   const darkSky = 'https://api.darksky.net/forecast/'
-  const queries = `?exclude=minutely,hourly,daily&lang=${browserBits.lang}&units=auto`
-  const url = `${cors}${darkSky}${key}/${browserBits.lat},${browserBits.lon}${queries}`
+  const queries = `?exclude=minutely,hourly,daily&lang=${lang}&units=auto`
+  const url = `${cors}${darkSky}${key}/${browserBits.loc}${queries}`
+  return url
+}
+
+// FUNCTIONAL CHECK 🆗
+function googleMapsUrlBuilder (position) {
+  const browserBits = urlParts(position)
+  // const key = ''
+  const googleMaps = 'https://maps.googleapis.com/maps/api/geocode/json'
+  const parameters = `?latlng=${browserBits.loc}&language=${browserBits.browserLang}`
+  const url = `${googleMaps}${parameters}`
   return url
 }
 
 // FUNCTIONAL CHECK 🆗
 // CALL API TO GET DATA
-function getWeatherData (url) {
+function callApi (url, service) {
   return new Promise(function promiseResponse (resolve, reject) {
     const request = new XMLHttpRequest()
     // REQUEST CALLBACKS
     request.open('GET', url)
-    request.onloadstart = _ => console.log('LOAD START')
+    request.onloadstart = _ => console.log(`${service}: LOAD START`)
     request.onload = function requestOnload () {
-      console.log(`${request.status}: ${request.statusText}`)
+      console.log(`${service}: ${request.status}, ${request.statusText}`)
       if (request.status >= 200 && request.status < 400) {
         resolve(request.response)
       } else {
         reject(Error(request.status, request.statusText))
       }
     }
-    request.onerror = _ => reject(Error('Network error on getting data.'))
-    request.onloadend = _ => console.log('LOAD END')
+    request.onerror = _ => reject(Error(`${service}: Network error on getting data.`))
+    request.onloadend = _ => console.log(`${service}: LOAD END`)
     request.send()
   })
 }
-// TODO: finish reverse geocode
-function googleMapsUrlBuilder (position) {
-  const browserBits = urlParts(position)
-  const key = ''
-  const darkSky = 'https://api.darksky.net/forecast/'
-  const queries = `?exclude=minutely,hourly,daily&lang=${browserBits.lang}&units=auto`
-  const url = `${browserBits.lat},${browserBits.lon}`
-  return url
-}
 
-export { apiLangs, dummyData, darkSkyUrlBuilder, getWeatherData, googleMapsUrlBuilder }
+export { apiLangs, dummyData, darkSkyUrlBuilder, googleMapsUrlBuilder, callApi }

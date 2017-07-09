@@ -1,26 +1,31 @@
 /* eslint-env browser */
-import { getWeatherData, darkSkyUrlBuilder, dummyData } from './api.js'
+import { callApi, darkSkyUrlBuilder, googleMapsUrlBuilder, dummyData } from './api.js'
 import { checkNavigator, writeToDoc } from './browser.js'
 
 // Wait for everything to load, avoiding document timing issues
 window.addEventListener('load', async function loaded () {
-  let weather = window.sessionStorage.saveMeCalls
+  let weather = window.sessionStorage.darkSky
+  let address = window.sessionStorage.googleMaps
 
   // don't make unnecessary calls
   if (!weather) {
     try {
-      window.sessionStorage.saveMeCalls = await checkNavigator()
-          .then(pos => getWeatherData(darkSkyUrlBuilder(pos)))
-      weather = JSON.parse(window.sessionStorage.saveMeCalls)
+      window.sessionStorage.googleMaps = await checkNavigator()
+          .then(pos => callApi(googleMapsUrlBuilder(pos), 'Google Maps'))
+      window.sessionStorage.darkSky = await checkNavigator()
+          .then(pos => callApi(darkSkyUrlBuilder(pos), 'Dark Sky'))
+      weather = JSON.parse(window.sessionStorage.darkSky)
+      address = JSON.parse(window.sessionStorage.googleMaps)
     } catch (error) {
       console.log(error)
       console.log('Using placeholder data.')
       weather = dummyData
+      address = 'Seymour, CT, USA'
     }
     writeToDoc(weather)
   } else {
     console.log('Using data from session storage.')
-    writeToDoc(JSON.parse(weather))
+    writeToDoc(JSON.parse(weather), JSON.parse(address))
   }
   return console.log('DONE')
 })

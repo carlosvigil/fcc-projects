@@ -24,11 +24,13 @@ function checkNavigator () {
   }
 }
 
+// TODO: Write address
 // FUNCTIONAL CHECK ❔
 // Present the data returned from the rest of the application to the UI
-function writeToDoc (weather) {
+function writeToDoc (weather, address) {
   const elm = element => document.querySelector(element)
-  const coordinates = `${weather.latitude}, ${weather.longitude}`
+  // const coordinates = `${weather.latitude}, ${weather.longitude}`
+  const addressString = address.results[1].formatted_address
   const current = weather.currently
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
@@ -38,24 +40,24 @@ function writeToDoc (weather) {
 
   // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
-  elm('.location').innerHTML = coordinates
+  elm('.location').innerHTML = addressString
   elm('.summary').innerHTML = current.summary
   elm('.temp').innerHTML = `${current.temperature}&#176;`
   elm('time').setAttribute('datetime', isoTime)
   elm('time').innerHTML = utcTime
 }
 
-function toggleScale () {
-  const toggle = document.querySelector('#switch')
-  let checked = toggle.checked === true
+// function toggleScale () {
+//   const toggle = document.querySelector('#switch')
+//   let checked = toggle.checked === true
 
-  toggle.addEventListener("click", function() {
-    if (checked) {
-      return
-    } else {
+//   toggle.addEventListener("click", function() {
+//     if (checked) {
+//       return
+//     } else {
 
-    }
-  })
-}
+//     }
+//   })
+// }
 
 export { checkNavigator, writeToDoc }
