@@ -1,18 +1,16 @@
 // FEATURE: IS PREFERRED LANGUAGE & DIALECT AVAILABLE ?
 
-// It might be faster to use a search other than linear, but no benchmarks for this yet
 function binarySearch (arr, val) {
   let exactMatch = exact(arr, val)
   let fuzzyMatch = fuzzy(arr, val)
 
   // return search results
-  if (exactMatch) {
-    return [2]
-  } else if (fuzzyMatch) {
-    return [1, fuzzyMatch]
-  } else return 0
+  if (exactMatch) return [2]
+  else if (fuzzyMatch[0] === 1) return fuzzyMatch
+  else return [0]
 }
 
+// does nothing if lang is in supported api langs array and the app continues
 function exact (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
@@ -30,8 +28,10 @@ function exact (arr, val) {
     midIndex = Math.floor((lowIndex + highIndex) / 2)
     match = arr[midIndex].indexOf(val) === 0
   }
+  return match
 }
 
+// fuzzy search function that accepts the first match
 function fuzzy (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
@@ -39,8 +39,6 @@ function fuzzy (arr, val) {
   let match = val.indexOf(arr[midIndex]) === 0
 
   while (!match && lowIndex < highIndex) {
-    // BUG: May iterate through all fuzzy matches instead of keeping best match
-    fuzzyMatch = fuzzyCheck ? arr[midIndex] : null
     // change the center to reflect the decided halve of the arr
     if (val < arr[midIndex]) {
       highIndex = midIndex - 1
@@ -51,6 +49,7 @@ function fuzzy (arr, val) {
     midIndex = Math.floor((lowIndex + highIndex) / 2)
     match = val.indexOf(arr[midIndex]) === 0
   }
+  return [match, midIndex]
 }
 
 // to provide a better UX, send best matched language string to the calling f()
@@ -64,7 +63,7 @@ export default function setLanguage (arr, lang) {
       console.log(`Preferred language dialect (${lang}) is unavailable. Add '${results[1]}' to api call.`)
       return results[1]
     default:
-      console.log('Preferred language (${lang}) is unavailable. Add \'en\' to api call.')
+      console.log(`Preferred language (${lang}) is unavailable. Add 'en' to api call.`)
       return 'en'
   }
 }
