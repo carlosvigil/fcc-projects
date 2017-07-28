@@ -63,7 +63,7 @@ function callApi (url, service) {
       if (request.status >= 200 && request.status < 400) {
         resolve(request.response)
       } else {
-        reject(Error(request.status, request.statusText))
+        reject(Error(request.statusText))
       }
     }
     request.onerror = _ => reject(Error(`${service}: Network error on getting data.`))
