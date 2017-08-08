@@ -11,17 +11,17 @@
 *  and if they are use them to provide the API call a set of coordinates. */
 function checkNavigator () {
   const geo = window.navigator.geolocation
-  // GEOLOCATION AVAILABLE ?
-  if (geo) {
-    // yup, promise location
-    console.log('Geolocation is available.')
-    return new Promise(function promiseLocation (resolve, reject) {
-      const geoOptions = { enableHighAccuracy: true, timeout: 15000, maximumAge: 900000 }
+  return new Promise(function promiseLocation (resolve, reject) {
+    const geoOptions = { enableHighAccuracy: true, timeout: 15000, maximumAge: 900000 }
+
+    if (geo) {
+      console.log('Geolocation is available.')
       geo.getCurrentPosition(pos => resolve(pos), err => reject(err), geoOptions)
-    })
-  } else {
-    return window.alert('Geolocation unavailable.')
-  }
+    } else {
+      reject(Error('Geolocation unavailable.'))
+      window.alert('Geolocation unavailable.')
+    }
+  })
 }
 
 // TODO: Write address
