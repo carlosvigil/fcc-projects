@@ -1,4 +1,5 @@
 /* eslint-env browser */
+// import 'babel-polyfill'
 import { callApi, darkSkyUrlBuilder, googleMapsUrlBuilder, dummyData } from './api.js'
 import { checkNavigator, writeToDoc } from './browser.js'
 
