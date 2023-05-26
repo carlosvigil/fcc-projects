@@ -7,9 +7,9 @@
   "author": "Carlos Vigil <https://carlos.network/",
   "license": "MIT",
   "scripts": {
-    "build": "webpack --progress --config webpack.config.js",
-    "watch-pack": "webpack --progress --watch --config webpack.config.js",
-    "watch-test-pack": "webpack --progress --watch --config test.config.js",
+    "build": "webpack --progress --config webpack.dev.js",
+    "watch-pack": "webpack --progress --watch --config webpack.dev.js",
+    "watch-test-pack": "webpack --progress --watch --config webpack.test.js",
     "watch-browser": "browser-sync start -c 'bs-config.js'",
     "dev": "npm-run-all --parallel watch-pack watch-browser",
     "test": "npm-run-all --parallel watch-test-pack watch-browser"
