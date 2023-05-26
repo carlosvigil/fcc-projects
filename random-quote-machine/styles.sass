@@ -31,11 +31,27 @@ $greenish: hsl(104, 20%, 34%)
   background-color: $greenish
   color: $whiteish
 
+// Media Qs
+@media (min-width:40em) and (max-width:52em)
+  .new
+    background-image: none
+    height: auto
+    width: auto
+
+@media (min-width:52em) and (max-width:64em)
+  .new
+
+
+@media (min-width:64em)
+  .new
+
+
 // Le styles
 html,
 body
   background-color: $greenish
   color: $whiteish
+  font-family: serif
   height: 100%
 
 .h1
@@ -46,9 +62,12 @@ body
 
 .new
   background-color: $whiteish
+  background-image: url('resources/leaf-sm.png')
   border: 0
   border-radius: 2.618033988733px
   color: $greenish
+  height: 72px
+  width: 100px
 
 a
   color: $orangy
