@@ -131,11 +131,7 @@ request.onloadend = _ => {
 
 // CHECK TEMP SCALE
 function tempScaleCheck () {
-  if (weather.flags.units === 'us') {
-    scaleChar = 'F'
-  } else {
-    scaleChar = 'C'
-  }
+  weather.flags.units === 'us' ? scaleChar = 'F' : scaleChar = 'C'
 }
 
 // FINALLY, WRITE TO THE DOC
