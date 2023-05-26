@@ -1,0 +1,53 @@
+.line-top, .line-bottom {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  width: 1%; }
+
+.light {
+  background-color: #fde7af;
+  color: #4f6845; }
+
+.dark {
+  background-color: #4f6845;
+  color: #fde7af; }
+
+@media (min-width: 40em) and (max-width: 52em) {
+  .new {
+    background-image: none;
+    height: auto;
+    width: auto; } }
+html,
+body {
+  background-color: #4f6845;
+  color: #fde7af;
+  font-family: serif;
+  height: 100%; }
+
+.h1 {
+  color: #d48c21; }
+
+.credit {
+  color: #b7945c; }
+
+.new {
+  background-color: #fde7af;
+  background-image: url("resources/leaf-sm.png");
+  border: 0;
+  border-radius: 2.6180339887px;
+  color: #4f6845;
+  height: 72px;
+  width: 100px; }
+
+a {
+  color: #d48c21;
+  text-decoration: none; }
+
+a:hover {
+  color: #fde7af;
+  text-decoration: underline; }
+
+.line-top {
+  border-bottom: 320px solid #fde7af; }
+
+.line-bottom {
+  border-top: 320px solid #fde7af; }
