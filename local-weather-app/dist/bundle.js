@@ -279,6 +279,7 @@ window.addEventListener('load', async function loaded () {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = setLanguage;
 // FEATURE: IS PREFERRED LANGUAGE & DIALECT AVAILABLE ?
+// FIXME: Still ignores fuzzy matches, check if the indexes are correct
 
 function binarySearch (arr, val) {
   let exactMatch = exact(arr, val)
