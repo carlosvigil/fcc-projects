@@ -77,11 +77,11 @@
 
 function binarySearch (arr, val) {
   let exactMatch = exact(arr, val)
-  let fuzzyMatch = [0] // fuzzy(arr, val)
+  let fuzzyMatch = fuzzy(arr, val)
 
   // return search results
   if (exactMatch) return [2]
-  else if (fuzzyMatch[0] === 1) return fuzzyMatch
+  else if (fuzzyMatch[0]) return [1, fuzzyMatch[1]]
   else return [0]
 }
 
@@ -94,10 +94,10 @@ function exact (arr, val) {
 
   while (!match && lowIndex <= highIndex) {
     // change the center
-    if (arr[midIndex] < val) { //
-      lowIndex = midIndex + 1
-    } else if (arr[midIndex] > val) { //
+    if (val < arr[midIndex]) {
       highIndex = midIndex - 1
+    } else if (val > arr[midIndex]) {
+      lowIndex = midIndex + 1
     }
     // these variables don't update unless reassigned
     midIndex = Math.floor((lowIndex + highIndex) / 2)
@@ -107,25 +107,25 @@ function exact (arr, val) {
 }
 
 // fuzzy search function that accepts the first match
-// function fuzzy (arr, val) {
-//   let lowIndex = 0
-//   let highIndex = arr.length - 1
-//   let midIndex = Math.floor((lowIndex + highIndex) / 2)
-//   let match = val.indexOf(arr[midIndex]) === 0
+function fuzzy (arr, val) {
+  let lowIndex = 0
+  let highIndex = arr.length - 1
+  let midIndex = Math.floor((lowIndex + highIndex) / 2)
+  let match = val.indexOf(arr[midIndex]) !== -1
 
-//   while (!match && lowIndex < highIndex) {
-//     // change the center to reflect the decided halve of the arr
-//     if (val < arr[midIndex]) {
-//       highIndex = midIndex - 1
-//     } else if (val > arr[midIndex]) {
-//       lowIndex = midIndex + 1
-//     }
-//     // these variables don't update unless reassigned
-//     midIndex = Math.floor((lowIndex + highIndex) / 2)
-//     match = val.indexOf(arr[midIndex]) === 0
-//   }
-//   return [match, midIndex]
-// }
+  while (!match && lowIndex <= highIndex) {
+    // change the center to reflect the decided halve of the arr
+    if (val < arr[midIndex]) {
+      highIndex = midIndex - 1
+    } else if (val > arr[midIndex]) {
+      lowIndex = midIndex + 1
+    }
+    // these variables don't update unless reassigned
+    midIndex = Math.floor((lowIndex + highIndex) / 2)
+    match = val.indexOf(arr[midIndex]) !== -1
+  }
+  return [match, arr[midIndex]]
+}
 
 // to provide a better UX, send best matched language string to the calling f()
 function setLanguage (arr, lang) {
@@ -139,8 +139,7 @@ function setLanguage (arr, lang) {
         console.log(`Preferred language dialect (${lang}) is unavailable. Add '${results[1]}' to api call.`)
         return results[1]
       default:
-        console.log(`****************************** ERROR ******************************
-      \nPreferred language (${lang}) is unavailable. Add 'en' to api call.`)
+        console.log(`Preferred language (${lang}) is unavailable. Add 'en' to api call.`)
         return 'en'
     }
   } catch (error) {
@@ -253,22 +252,7 @@ window.addEventListener('load', function loaded () {
   // passes the apiLang array of available Dark Sky languages to binsearch
   // FIXME: does not match middle 'is' in api array and first value 'af' in glang
   // weird list from weird google site TODO: add url
-  // const gLang = [
-  //   'af', 'ach', 'ak', 'am', 'ar', 'az', 'be', 'bem', 'bg', 'bh', 'bn', 'br',
-  //   'bs', 'ca', 'chr', 'ckb', 'co', 'crs', 'cs', 'cy', 'da', 'de', 'ee',
-  //   'el', 'en', 'eo', 'es', 'es-419', 'et', 'eu', 'fa', 'fi', 'fo', 'fr',
-  //   'fy', 'ga', 'gaa', 'gd', 'gl', 'gn', 'gu', 'ha', 'haw', 'hi', 'hr', 'ht',
-  //   'hu', 'hy', 'ia', 'id', 'ig', 'is', 'it', 'iw', 'ja', 'jw', 'ka', 'kg',
-  //   'kk', 'km', 'kn', 'ko', 'kri', 'ku', 'ky', 'la', 'lg', 'ln', 'lo', 'loz',
-  //   'lt', 'lua', 'lv', 'mfe', 'mg', 'mi', 'mk', 'ml', 'mn', 'mo', 'mr', 'ms',
-  //   'mt', 'ne', 'nl', 'nn', 'no', 'nso', 'ny', 'nyn', 'oc', 'om', 'or', 'pa',
-  //   'pcm', 'pl', 'ps', 'pt-br', 'pt-pt', 'qu', 'rm', 'rn', 'ro', 'ru', 'rw',
-  //   'sd', 'sh', 'si', 'sk', 'sl', 'sn', 'so', 'sq', 'sr', 'sr-me', 'st',
-  //   'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to',
-  //   'tr', 'tt', 'tum', 'tw', 'ug', 'uk', 'ur', 'uz', 'vi', 'wo', 'xh',
-  //   'xx-bork', 'xx-elmer', 'xx-hacker', 'xx-klingon', 'xx-pirate', 'yi',
-  //   'yo', 'zh-cn', 'zh-tw', 'zu'
-  // ]
+  const wLang = ['en-us', 'zh-sp', 'es-es']
 
   let working = []
   let failing = []
@@ -287,16 +271,18 @@ window.addEventListener('load', function loaded () {
   }
 
   // RUN TESTS
-  testSingle('is')
+  // test all of weird list
+  working.push('\nWLANGS::')
+  failing.push('\nWLANGS::')
 
-  // test all of weird google list
-  // working.push('\n***gLangs***')
-  // for (let val of gLang) {
-  //   testArray(apiLangs, val) === val ? working.push(`\n${val}`) : failing.push(`\n${val}`)
-  // }
+  for (let val of wLang) {
+    testArray(__WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */], val) === val ? working.push(`\n${val}`) : failing.push(`\n${val}`)
+  }
 
   // test the api languages
-  working.push('\n***apiLangs***')
+  working.push('\nAPILANGS::')
+  failing.push('\nAPILANGS::')
+
   for (let val of __WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */]) {
     testArray(__WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */], val) === val ? working.push(`\n${val}`) : failing.push(`\n${val}`)
   }
@@ -304,7 +290,6 @@ window.addEventListener('load', function loaded () {
   return console.log(`\nWorking: ${working}\n\nFailing: ${failing}`)
 })
 
-//
 // promiseWeather = Promise.all()
 //     .then(writeToDoc(storedData))
 //     .catch(error => console.log(error))
