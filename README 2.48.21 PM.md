@@ -28,3 +28,17 @@ quotes I liked because then I'd be upset if I didn't include *every* good thing
 I've *ever read*. The result was a random chapter selector from the Tao Te Ching
 . Something I'm proud to share and incorporate in my life; rather than being a
 throwaway project. (Except for that one passage about infants; it's weird.)
+
+### 4. Local Weather App
+
+Build an app that shows the local weather and allows the user to change degree 
+scale. I made it in less than a day; it shows. Most notably, I didn't make use 
+of the API's ability to return Centigrade and Fahrenheit but made some messy 
+functions for converting the data. And, it can only be done once, from ºF to ºC.
+ I remember the distinct feeling of disgust when I decided the required stories 
+were met.
+
+### 5. Wikipedia Viewer
+
+Currently "under work". Not sure when I'll get back to it as I'm either in 
+class, work, or doing homework.
