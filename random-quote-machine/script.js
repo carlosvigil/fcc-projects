@@ -13,9 +13,9 @@ $(document).ready(function() {
 
   $('.new').on('click', function() {
     ch = Math.floor(Math.random() * (81 - 2)) + 2;
-    at.fadeOut(1364, function() {
+    $('body').fadeOut(1364, function() {
       at.html(bk[ch]);
-      at.fadeIn(842);
+      $('body').fadeIn(842);
     });
   });
 });
