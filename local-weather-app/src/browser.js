@@ -1,12 +1,12 @@
 /* eslint-env browser */
-// MAYBE: add session storage comparison
+// FEATURE: add session storage comparison
 //   if new position differs from stored position
 // FEATURE: add timezone offset to written time
 // FEATURE: add dark sky maps
 //   <script type='text/javascript' src='https://maps.darksky.net/@apparent_temperature,41.350,-432.848,9.js?embed=true&timeControl=true&fieldControl=true&defaultField=temperature&defaultUnits=_f'></script>
 // REQUIREMENT: add toggle switch for temperature scale
 
-// IS PREFERRED LANGUAGE AVAILABLE ?
+// FEATURE: IS PREFERRED LANGUAGE AVAILABLE ?
 // SEARCH ALGO FIXME: SPLIT INTO TWO SEARCHES, Add AWAIT
 // async function binarySearchLanguage () {
 //   let lang = window.navigator.language.toLowerCase()
@@ -43,7 +43,7 @@
 //   return console.log(`Lang sent to API is: ${lang}`)
 // }
 
-// NOTE: FUNCTIONAL CHECK 🆗
+// FUNCTIONAL CHECK 🆗
 // CHECK NAVIGATOR AND RETURN POSITION
 export function checkNavigator () {
   const geo = window.navigator.geolocation
@@ -68,14 +68,13 @@ export function checkNavigator () {
 // WRITE TO THE DOC
 export function writeToDoc (weather) {
   const elm = element => document.querySelector(element)
-  // TODO: GET TOWN, USE ADDRESS OVER COORDS
   const location = `${weather.latitude}, ${weather.longitude}`
   const current = weather.currently
   const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
   const utcTime = time.toUTCString()
   let tempScale = weather.flags.units === 'us' ? 'F' : 'C'
-  // TODO: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
+  // REQUIREMENT: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
   // select('.icon').setAttribute('id', iconStr)
   elm('.location').innerHTML = location
   elm('.summary').innerHTML = current.summary
@@ -83,7 +82,3 @@ export function writeToDoc (weather) {
   elm('time').setAttribute('datetime', isoTime)
   elm('time').innerHTML = utcTime
 }
-
-// promiseWeather = Promise.all()
-//     .then(writeToDoc(storedData))
-//     .catch(error => console.log(error))
