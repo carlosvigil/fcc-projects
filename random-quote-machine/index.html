@@ -1,214 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta content="http://codepen.io/Cairos/full/ZOwGXw/" property="og:url" />
-    <meta content="website" property="og:type" />
-    <meta content="Random Tao Te Ching" property="og:title" />
-    <meta content="Get a random chapter from the Tao Te Ching" property="og:description" />
-    <link href="https://fonts.googleapis.com/css?family=Cabin|Cabin+Sketch:700" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta content="http://codepen.io/Cairos/full/ZOwGXw/" property="og:url">
+    <meta content="website" property="og:type">
+    <meta content="Random Tao Te Ching" property="og:title">
+    <meta content="Get a random chapter from the Tao Te Ching" property="og:description">
     <title>Random Tao Te Ching Chapters</title>
-    <style type="text/css">
-      html, body, div, span, applet, object, iframe,
-      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-      a, abbr, acronym, address, big, cite, code,
-      del, dfn, em, img, ins, kbd, q, s, samp,
-      small, strike, strong, sub, sup, tt, var,
-      b, u, i, center,
-      dl, dt, dd, ol, ul, li,
-      fieldset, form, label, legend,
-      table, caption, tbody, tfoot, thead, tr, th, td,
-      article, aside, canvas, details, embed,
-      figure, figcaption, footer, header, hgroup,
-      menu, nav, output, ruby, section, summary,
-      time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-      }
-
-      article, aside, details, figcaption, figure,
-      footer, header, hgroup, menu, nav, section {
-        display: block;
-      }
-
-      body {
-        line-height: normal;
-      }
-
-      ol, ul {
-        list-style: none;
-      }
-
-      blockquote, q {
-        quotes: none;
-      }
-
-      blockquote:before, blockquote:after,
-      q:before, q:after {
-        content: "";
-        content: none;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-
-      .line-top, .line-bottom {
-        border-left: 1px solid transparent;
-        border-right: 1px solid transparent;
-      }
-
-      html,
-      body {
-        background-color: #4f6845;
-        height: 100%;
-        margin: none;
-        overflow: auto;
-        text-align: center;
-      }
-
-      body {
-        color: #fde7af;
-        font-family: "Cabin", serif;
-        font-size: 122.99187%;
-      }
-
-      .main {
-        margin: auto;
-      }
-
-      .h1 {
-        color: #d48c21;
-        float: left;
-        font-family: "Cabin Sketch", cursive;
-        font-size: 161.8034%;
-        height: 23.6068%;
-        padding-top: 23.6068%;
-        width: 23.6068%;
-      }
-
-      .line {
-        float: left;
-        height: 100%;
-        padding-top: 5.57281%;
-      }
-
-      article {
-        height: 61.8034%;
-        padding: 23.6068%;
-        width: 61.8034%;
-      }
-
-      .credit {
-        clear: left;
-        color: #b7945c;
-        float: left;
-        font-size: 76.01316%;
-      }
-
-      .buttons {
-        float: right;
-        height: 14.5898%;
-        width: 14.5898%;
-      }
-
-      .random {
-        background-color: #fde7af;
-        border: 0;
-        border-radius: 2.61803px;
-        color: #4f6845;
-      }
-
-      a {
-        color: #d48c21;
-        text-decoration: none;
-      }
-
-      a:hover {
-        color: #fde7af;
-        text-decoration: underline;
-      }
-
-      .line-top {
-        border-bottom: 320px solid #fde7af;
-      }
-
-      .line-bottom {
-        border-top: 320px solid #fde7af;
-      }
-
-      .light {
-        background-color: #fde7af;
-        color: #4f6845;
-      }
-
-      .dark {
-        background-color: #4f6845;
-        color: #fde7af;
-      }
-    </style>
+    <link href="https://npmcdn.com/basscss@8.0.2/css/basscss.min.css" rel="stylesheet" type="text/css">
+    <link href="styles.css" rel="stylesheet" type="text/css">
   </head>
-  <body>
+  <body class="m0 border clear-fix fit">
     <div id="fb-root"></div>
     <script>
       (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
     </script>
-    <div class="main">
-      <h1 class="h1">
-        T<br>a<br>o<br><br /> T<br>e<br><br /> C<br>h<br>i<br>n<br>g
-      </h1>
-      <div class="line">
+    <div class="table left col-1">
+      <div class="table-cell align-middle h1 center">
+        T<br>a<br>o<br><br> T<br>e<br><br> C<br>h<br>i<br>n<br>g
+      </div>
+      <div class="table-cell align-middle right">
         <div class="line-top"></div>
         <div class="line-bottom"></div>
       </div>
-      <div class="credit">
-        Written by Lao-tzu<br /> Translation by S. Mitchell<br /> Copyright &#169; 2016 <a href="https://www.twitter.com/@cairos_v" title="Twitter Profile">Carlos Vigil</a>
+    </div>
+    <div class="flex flex-wrap">
+      <div class="article max-width-6 ml-auto col-6 sm-h4 md-h3 lg-h4 border">
+        The tao that can be told<br> is not the eternal Tao<br> The name that can be named<br> is not the eternal Name.<br><br> The unnamable is the eternally real.<br> Naming is the origin<br> of all particular things.<br><br> Free from desire, you realize the mystery.<br> Caught in desire, you see only the manifestations.<br><br> Yet mystery and manifestations<br> arise from the same source.<br> This source is called darkness.<br><br> Darkness within darkness.<br> The gateway to all understanding. 
       </div>
-      <article>
-        The tao that can be told<br /> is not the eternal Tao<br /> The name that can be named<br /> is not the eternal Name.<br /><br /> The unnamable is the eternally real.<br /> Naming is the origin<br /> of all particular things.<br /><br /> Free from desire, you realize the mystery.<br /> Caught in desire, you see only the manifestations.<br /><br /> Yet mystery and manifestations<br /> arise from the same source.<br /> This source is called darkness.<br /><br /> Darkness within darkness.<br /> The gateway to all understanding.
-      </article>
-      <div class="buttons">
-        <button class="random">Random Chapter</button><br /><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a><br />
-        <div class="fb-share-button" data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button" data-mobile-iframe="false" data-size="small">
+      <div class="right table col-1 p1 mr-auto border">
+        <button class="new table-cell align-middle mt2 mr1">Random Chapter</button><br><a class="twitter-share-button table-cell align-bottom" href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a><br>
+        <div class="fb-share-button table-cell align-middle" data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button" data-mobile-iframe="false" data-size="small">
           <a class="fb-xfbml-parse-ignore" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;amp;src=sdkpreparse" target="_blank">Share</a>
         </div>
       </div>
     </div>
-    <script>
-      (function() {
-        $(document).ready(function() {
-          var book, chapter;
-          book = [];
-          chapter = 0;
-          $.getJSON('resources/tao-te-ching.json', function(json) {
-            $.each(json, function(key, val) {
-              book.push(val);
-            });
-            $('article').html(book[chapter]);
-          });
-          console.log(book);
-          $('.random').on('click', function() {
-            chapter = Math.floor(Math.random() * (81 - 2)) + 2;
-            $(this).toggleClass('light');
-            $('.main').toggleClass('dark');
-            $('article').fadeOut(1364.000733092, function() {
-              $('article').html(book[chapter]);
-              $('article').fadeIn(842.998813731);
-            });
-            console.log('Current chapter: ' + chapter + 1);
-            console.log(book[chapter]);
-          });
-        });
-
-      }).call(this);
-
-    </script>
+    <div class="credit max-width-1 mt2 mx-auto h5 border">
+      Written by Lao-tzu<br> Translation by S. Mitchell<br> Copyright &#169; 2016 <a href="https://www.twitter.com/@cairos_v" title="Twitter Profile">Carlos Vigil</a>
+    </div>
     <script>
       window.twttr = (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0],
@@ -218,17 +47,16 @@
         js.id = id;
         js.src = "https://platform.twitter.com/widgets.js";
         fjs.parentNode.insertBefore(js, fjs);
-
+      
         t._e = [];
         t.ready = function(f) {
           t._e.push(f);
         };
-
+      
         return t;
       }(document, "script", "twitter-wjs"));
     </script>
-    <script id="__bs_script__">
-      //<![CDATA[ &&     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.14.0.js'><\/script>".replace("HOST", location.hostname)); && //]]>
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

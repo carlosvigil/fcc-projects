@@ -1,0 +1,67 @@
+// Phi
+$phi: 1.618033988749
+
+@function phi-a($number)
+  @return $number / $phi
+
+$phi3: 2.618033988733
+$phi4: 4.236067977467
+$phi5: 6.854101966185
+
+@function phi-b($number)
+  @return $number - ($number / $phi)
+
+// Palette
+$orangy:   hsl(36, 73%, 48%)
+$brownish: hsl(37, 39%, 54%)
+$whiteish: hsl(43, 95%, 84%)
+$greenish: hsl(104, 20%, 34%)
+
+// Helpers
+%tsb
+  border-left: 1px solid transparent
+  border-right: 1px solid transparent
+  width: 1%
+
+.light
+  background-color: $whiteish
+  color: $greenish
+
+.dark
+  background-color: $greenish
+  color: $whiteish
+
+// Le styles
+html,
+body
+  background-color: $greenish
+  color: $whiteish
+  height: 100%
+
+.h1
+  color: $orangy
+
+.credit
+  color: $brownish
+
+.new
+  background-color: $whiteish
+  border: 0
+  border-radius: 2.618033988733px
+  color: $greenish
+
+a
+  color: $orangy
+  text-decoration: none
+
+a:hover
+  color: $whiteish
+  text-decoration: underline
+
+.line-top
+  @extend %tsb
+  border-bottom: 320px solid $whiteish
+
+.line-bottom
+  @extend %tsb
+  border-top: 320px solid $whiteish
