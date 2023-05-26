@@ -3,7 +3,7 @@ import setLanguage from './langSearch.js'
 
 const apiLangs = [
   'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el', 'en', 'es', 'et', 'fr',
-  'hr', 'hu', 'id', 'it', 'is', 'kw', 'nb', 'nl', 'pl', 'pt', 'ru', 'sk', 'sl',
+  'hr', 'hu', 'id', 'is', 'it', 'kw', 'nb', 'nl', 'pl', 'pt', 'ru', 'sk', 'sl',
   'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin', 'zh', 'zh-tw'
 ]
 

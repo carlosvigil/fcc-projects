@@ -3,7 +3,7 @@
 
 function binarySearch (arr, val) {
   let exactMatch = exact(arr, val)
-  let fuzzyMatch = false // fuzzy(arr, val)
+  let fuzzyMatch = [0] // fuzzy(arr, val)
 
   // return search results
   if (exactMatch) return [2]
@@ -16,18 +16,18 @@ function exact (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
   let midIndex = Math.floor((lowIndex + highIndex) / 2)
-  let match = arr[midIndex].indexOf(val) === 0
+  let match = arr[midIndex] === val
 
-  while (!match && lowIndex < highIndex) {
-    // change the center to reflect the decided halve of the arr
-    if (val < arr[midIndex]) {
-      highIndex = midIndex - 1
-    } else if (val > arr[midIndex]) {
+  while (!match && lowIndex <= highIndex) {
+    // change the center
+    if (arr[midIndex] < val) { //
       lowIndex = midIndex + 1
+    } else if (arr[midIndex] > val) { //
+      highIndex = midIndex - 1
     }
     // these variables don't update unless reassigned
     midIndex = Math.floor((lowIndex + highIndex) / 2)
-    match = arr[midIndex].indexOf(val) === 0
+    match = arr[midIndex] === val
   }
   return match
 }
@@ -56,19 +56,20 @@ function exact (arr, val) {
 // to provide a better UX, send best matched language string to the calling f()
 export default function setLanguage (arr, lang) {
   const results = binarySearch(arr, lang)
-  switch (results[0]) {
-    case 2:
-      console.log(`Preferred language is available. Add '${lang}' to api call.`)
-      return lang
-    case 1:
-      console.log(`Preferred language dialect (${lang}) is unavailable. Add '${results[1]}' to api call.`)
-      return results[1]
-    default:
-      console.log(`
-
-      ****************************** ERROR ******************************
-
-      Preferred language (${lang}) is unavailable. Add 'en' to api call.`)
-      return 'en'
+  try {
+    switch (results[0]) {
+      case 2:
+        console.log(`Preferred language is available. Add '${lang}' to api call.`)
+        return lang
+      case 1:
+        console.log(`Preferred language dialect (${lang}) is unavailable. Add '${results[1]}' to api call.`)
+        return results[1]
+      default:
+        console.log(`****************************** ERROR ******************************
+      \nPreferred language (${lang}) is unavailable. Add 'en' to api call.`)
+        return 'en'
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
