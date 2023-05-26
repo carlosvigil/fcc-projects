@@ -3,17 +3,17 @@ body {
   background-color: #4f6845;
   color: #fde7af;
   font-family: serif; 
-  margin: auto; }
+  height: 100%; }
 
-.f1, .f2 {
+.h1 {
   color: #d48c21; }
 
-.f5 {
+.h4 {
   color: #b7945c; }
 
 .new {
   background-color: #fde7af;
-  background-image: url("resources/leaf-sm.png");
+  background-image: url("../resources/leaf-sm.png");
   background-size: 100% 100%;
   border: 0;
   border-radius: 2.6180339887px;

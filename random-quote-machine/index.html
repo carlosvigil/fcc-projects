@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100 dt tc">
+<html>
   <head>
     <meta charset="utf-8">
     <meta content="http://codepen.io/Cairos/full/ZOwGXw/" property="og:url">
@@ -9,32 +9,31 @@
           property="og:description">
     <title>Random Tao Te Ching Chapters</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="styles.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="tachyons.css">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/bass.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
   </head>
-  <body class="h-100 pv3 dtc v-mid">
+  <body class="sm-flex flex-wrap items-center justify-center center py2">
 
     <div id="fb-root"></div>
     <script>
       (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
     </script>
 
-    <span class="f2 dn-ns">Tao Te Ching</span>
-    <div class="mv1 dn-ns">
+    <span class="h1 sm-hide md-hide lg-hide">Tao Te Ching</span>
+    <div class="my1 sm-hide md-hide lg-hide">
       <div class="line"></div>
     </div>
 
-    <div class="fl dn dt-ns">
-      <div class="f1 f2-m pr2-m dn dtc-ns v-mid">
-        T<br>a<br>o<br><br> T<br>e<br><br> C<br>h<br>i<br>n<br>g
-      </div>
-      <div class="dn dtc-l ph4">
-        <div class="line-top"></div>
-        <div class="line-bottom"></div>
-      </div>
+    <div class="xs-hide pr2 h1 md-h2">
+      T<br>a<br>o<br><br> T<br>e<br><br> C<br>h<br>i<br>n<br>g
+    </div>
+    <div class="sm-hide right">
+      <div class="line-top"></div>
+      <div class="line-bottom"></div>
     </div>
 
-    <article class="fl ma3 measure-wide-l measure-ns measure-narrow f2-l f3-ns f4 tl">
+    <article class="left-align m2 lg-h2 h3">
       The tao that can be told<br>
       is not the eternal Tao<br>
       The name that can be named<br>
@@ -55,13 +54,13 @@
       The gateway to all understanding.
     </article>
 
-    <aside class="fr f4">
-      <button class="new f5">Random Chapter</button>
-
-      <a class="dib twitter-share-button"
+    <aside class="h3">
+      <button class="new h4 mb2">Random Chapter</button>
+      <br>
+      <a class="twitter-share-button"
         href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a>
 
-      <div class="dib fb-share-button"
+      <div class="fb-share-button"
         data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button"
         data-mobile-iframe="true" data-size="small">
         <a class="fb-xfbml-parse-ignore"
@@ -69,7 +68,7 @@
           target="_blank">Share</a>
       </div>
 
-      <footer class="f5 pv2">
+      <footer class="h4 py2">
         Written by Lao-tzu<br>
         Translation by S. Mitchell<br>
         Copyright &#169; 2016
