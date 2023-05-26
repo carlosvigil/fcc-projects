@@ -4,7 +4,7 @@
 // TODO: add toggle switch for temperature scale
 // TODO: check if response has error obj; need to specify what errors occured
 
-import * as api from 'api'
+// import * as api from 'api'
 
 // VARIABLES
 const select = element => document.querySelector(element)
@@ -37,38 +37,38 @@ let scaleChar = stored ? weather.flags.units : ''
 
 // IS PREFERRED LANGUAGE AVAILABLE ?
 async function checkLanguage () {
-  lang ? binarySearch(api.apiLangs, lang) : lang = 'en'
+  lang ? binarySearch(apiLangs, lang) : lang = 'en'
 }
 
-// SEARCH ALGO TODO: FINISH THIS
+// SEARCH ALGO TODO: SPLIT INTO TWO SEARCHES
 function binarySearch () {
   let startIndex = 0
-  let stopIndex = api.apiLangs.length - 1
+  let stopIndex = apiLangs.length - 1
   let mid = Math.floor((stopIndex + startIndex) / 2)
-  let isLang = api.apiLangs[mid].indexOf(lang) !== -1
-  let containsLang = lang.indexOf(api.apiLangs[mid]) !== -1
+  let isLang = apiLangs[mid].indexOf(lang) !== -1
+  let containsLang = lang.indexOf(apiLangs[mid]) !== -1
 
   console.log('Starting binarySearch')
-  console.log(`Nav lang is: ${lang}, apiLangs middle value is: ${api.apiLangs[mid]}`)
+  console.log(`Nav lang is: ${lang}, apiLangs middle value is: ${apiLangs[mid]}`)
   // ((lang.indexOf(apiLangs[mid]) === -1 && start < stop) || (apiLangs.indexOf(lang) === -1 && start < stop)) {
   while ((!isLang && !containsLang) && startIndex < stopIndex) {
     // re-center
-    if (lang < api.apiLangs[mid]) {
+    if (lang < apiLangs[mid]) {
       stopIndex = mid - 1
-    } else if (lang > api.apiLangs[mid]) {
+    } else if (lang > apiLangs[mid]) {
       startIndex = mid + 1
     }
     mid = Math.floor((stopIndex + startIndex) / 2)
-    isLang = api.apiLangs.indexOf(lang) !== -1
-    containsLang = lang.indexOf(api.apiLangs[mid]) !== -1
-    console.log(`apiLangs middle value is: ${api.apiLangs[mid]}`)
+    isLang = apiLangs.indexOf(lang) !== -1
+    containsLang = lang.indexOf(apiLangs[mid]) !== -1
+    console.log(`apiLangs middle value is: ${apiLangs[mid]}`)
   }
-  console.log(`apiLangs middle value is: ${api.apiLangs[mid]}`)
+  console.log(`apiLangs middle value is: ${apiLangs[mid]}`)
 
   if (isLang) {
     console.log('Language is available.')
   } else if (containsLang) {
-    lang = api.apiLangs[mid]
+    lang = apiLangs[mid]
     console.log(`Preferred localization unavailable, setting to default: ${lang}.`)
   } else {
     lang = 'en'
@@ -97,7 +97,7 @@ function geoFailure (error) {
 // GEOLOCATION SUCCESS CALLBACK
 function geoSuccess (position) {
   const time = new Date(position.timestamp).toUTCString()
-  const url = api.urlBuilder(position)
+  const url = urlBuilder(position)
 
   // console report
   console.log(`GEOLOCATION AVAILABLE
@@ -105,8 +105,8 @@ function geoSuccess (position) {
     Latitude: ${url.lat}
     Longitude: ${url.lon}`)
   // GET DATA
-  api.request.open('GET', url.url)
-  api.request.send()
+  request.open('GET', url.url)
+  request.send()
 }
 
 // WRITE TO THE DOC
@@ -133,4 +133,4 @@ function tempScaleCheck () {
   weather.flags.units === 'us' ? scaleChar = 'F' : scaleChar = 'C'
 }
 
-export { weather, stored, lang, checkLanguage, checkNavigator, writeToDoc }
+// export { weather, stored, lang, checkLanguage, checkNavigator, writeToDoc }
