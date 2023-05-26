@@ -1,5 +1,5 @@
 /* eslint-env browser */
-// import lang from 'main'
+import { lang, weather, writeToDoc } from './main.js'
 
 const key = '767b3baa2aca876fa6ea5e4fbd75228c'
 const request = new XMLHttpRequest()
@@ -28,8 +28,7 @@ request.onprogress = _ => console.log('LOADING')
 // GET THE DATA AND STORE IT
 request.onload = function () { // TODO: return the parsed object
   if (this.status >= 200 && this.status < 400) {
-    // parse it, and, store it
-    weather = JSON.parse(this.response)
+    // store response
     window.sessionStorage['saveMeCalls'] = this.response
     // continue report
     console.log('Dark Sky API Data:')
@@ -44,4 +43,4 @@ request.onloadend = _ => {
   writeToDoc(weather)
 }
 
-// export { urlBuilder, apiLangs }
+export { urlBuilder, apiLangs }
