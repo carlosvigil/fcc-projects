@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta property="og:url"           content="http://codepen.io/Cairos/full/ZOwGXw/" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Random Tao Te Ching" />
+    <meta property="og:description"   content="Get a random chapter from the Tao Te Ching" />
+
+    <link rel="stylesheet" href="styles/css/main.css" media="screen"
+    charset="utf-8">
+    <script src="https://use.fortawesome.com/6140d2a6.js"></script>
+    <title>Random Tao Te Ching Chapters</title>
+  </head>
+
+  <body>
+
+    <!-- FB api -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="main">
+      <div class="h1">
+        <h1>T</h1><h1>a</h1><h1>o</h1>
+        <h1><br></h1>
+        <h1>T</h1><h1>e</h1>
+        <h1><br></h1>
+        <h1>C</h1><h1>h</h1><h1>i</h1><h1>n</h1><h1>g</h1>
+      </div>
+
+      <div><article></article></div>
+
+      <div class="buttons">
+        <button class="random">Random Chapter</button>
+
+        <a class="twitter-share-button"
+            href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&hashtag=codenewbies,freecodecamp&via=cairos_v&related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News"
+            >Tweet</a>
+
+        <div class="fb-share-button" data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;src=sdkpreparse">Share</a></div>
+      </div>
+
+      <div class="credit">
+        <h2>Written by Lao-tzu<br/>Translation by S. Mitchell</h2>
+      </div>
+
+      <div class="footer">
+        <i class="fa fa-code"></i>de の by <a href="https://www.twitter.com/@cairos_v">Carlos Vigil</a>
+      </div>
+    </div>
+
+    <!-- Twitter api -->
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="change.js"></script>
+
+  </body>
+</html>
