@@ -37,7 +37,7 @@ function fuzzy (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
   let midIndex = Math.floor((lowIndex + highIndex) / 2)
-  let match = val.indexOf(arr[midIndex]) !== -1
+  let match = val.indexOf(arr[midIndex]) === 0
 
   while (!match && lowIndex <= highIndex) {
     // change the center to reflect the decided halve of the arr
@@ -48,7 +48,7 @@ function fuzzy (arr, val) {
     }
     // these variables don't update unless reassigned
     midIndex = Math.floor((lowIndex + highIndex) / 2)
-    match = val.indexOf(arr[midIndex]) !== -1
+    match = val.indexOf(arr[midIndex]) === 0
   }
   return [match, arr[midIndex]]
 }

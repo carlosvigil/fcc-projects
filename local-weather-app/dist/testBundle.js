@@ -111,7 +111,7 @@ function fuzzy (arr, val) {
   let lowIndex = 0
   let highIndex = arr.length - 1
   let midIndex = Math.floor((lowIndex + highIndex) / 2)
-  let match = val.indexOf(arr[midIndex]) !== -1
+  let match = val.indexOf(arr[midIndex]) === 0
 
   while (!match && lowIndex <= highIndex) {
     // change the center to reflect the decided halve of the arr
@@ -122,7 +122,7 @@ function fuzzy (arr, val) {
     }
     // these variables don't update unless reassigned
     midIndex = Math.floor((lowIndex + highIndex) / 2)
-    match = val.indexOf(arr[midIndex]) !== -1
+    match = val.indexOf(arr[midIndex]) === 0
   }
   return [match, arr[midIndex]]
 }
@@ -249,13 +249,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* eslint-env browser */
 window.addEventListener('load', function loaded () {
   console.log('DOCUMENT IS READY')
-  // passes the apiLang array of available Dark Sky languages to binsearch
-  // FIXME: does not match middle 'is' in api array and first value 'af' in glang
-  // weird list from weird google site TODO: add url
   const wLang = ['en-us', 'zh-sp', 'es-es']
-
-  let working = []
-  let failing = []
+  let exactMatch = []
+  let fuzzyOrFail = []
 
   // scans an array for matches
   function testArray (arr, val) {
@@ -271,23 +267,26 @@ window.addEventListener('load', function loaded () {
   }
 
   // RUN TESTS
+  // singles
+  testSingle('ja')
+
   // test all of weird list
-  working.push('\nWLANGS::')
-  failing.push('\nWLANGS::')
+  exactMatch.push('\nWLANGS::')
+  fuzzyOrFail.push('\nWLANGS::')
 
   for (let val of wLang) {
-    testArray(__WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */], val) === val ? working.push(`\n${val}`) : failing.push(`\n${val}`)
+    testArray(__WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */], val) === val ? exactMatch.push(`\n${val}`) : fuzzyOrFail.push(`\n${val}`)
   }
 
   // test the api languages
-  working.push('\nAPILANGS::')
-  failing.push('\nAPILANGS::')
+  exactMatch.push('\nAPILANGS::')
+  fuzzyOrFail.push('\nAPILANGS::')
 
   for (let val of __WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */]) {
-    testArray(__WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */], val) === val ? working.push(`\n${val}`) : failing.push(`\n${val}`)
+    testArray(__WEBPACK_IMPORTED_MODULE_1__api_js__["a" /* apiLangs */], val) === val ? exactMatch.push(`\n${val}`) : fuzzyOrFail.push(`\n${val}`)
   }
 
-  return console.log(`\nWorking: ${working}\n\nFailing: ${failing}`)
+  return console.log(`\nExact Match: ${exactMatch}\n\nFuzzy or Failing: ${fuzzyOrFail}`)
 })
 
 // promiseWeather = Promise.all()
