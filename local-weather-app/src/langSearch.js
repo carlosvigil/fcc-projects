@@ -6,7 +6,7 @@ function binarySearch (arr, val) {
   let fuzzyMatch = fuzzy(arr, val)
 
   // return search results
-  if (exact) {
+  if (exactMatch) {
     return [2]
   } else if (fuzzyMatch) {
     return [1, fuzzyMatch]
