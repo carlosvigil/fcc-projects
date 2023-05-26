@@ -1,13 +1,14 @@
 html {
   height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0%;
+  padding: 0%;
 }
 
 body {
   height: 100%;
   width: 100%;
+  margin: 0%;
+  padding: 0%;
   background-color: #333;
   color: #eee;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -40,6 +41,16 @@ body {
   mix-blend-mode: multiply;
 }
 
+.temp {
+  padding-right: 8px;
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+}
+
 .switch label {
   display: block;
   width: 46px;
@@ -48,9 +59,9 @@ body {
   position: relative;
   cursor: pointer;
   user-select: none;
+  -moz-user-select: none;
   transition: background 350ms ease;
   text-align: center;
-  item-align: flex-end;
 }
 
 .switch label:before,
@@ -66,18 +77,18 @@ body {
 
 .switch label:before {
   background: rgba(50, 50, 50, 0.5);
-  transform: translate3d(100%, -50%, 0) scale(0);
+  transform: translate3d(100%, -50%, 0);
 }
 
 .switch label:after {
   background: rgba(50, 50, 50, 0.5);
-  transform: translate3d(100%, -50%, 0) scale(1);
+  transform: translate3d(100%, -50%, 0);
 }
 
 .switch input:checked + label:before {
-  transform: translate3d(0%, -50%, 0) scale(1);
+  transform: translate3d(0%, -50%, 0);
 }
 
 .switch input:checked + label:after {
-  transform: translate3d(0%, -50%, 0) scale(0);
+  transform: translate3d(0%, -50%, 0);
 }
