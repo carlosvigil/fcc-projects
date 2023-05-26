@@ -18,7 +18,12 @@ const apiLangs = [
   'zh', 'zh-tw'
 ]
 let lang = window.navigator.language
-let weather
+let weather = {
+  latitude: '',
+  longitude: '',
+  currently: {summary: '', time: 0, temperature: 0},
+  flags: {units: ''}
+}
 let stored = window.sessionStorage['saveMeCalls']
 let scaleChar = ''
 
@@ -38,13 +43,35 @@ function start () {
   if (stored) {
     console.log('Saving calls by using stored data.')
     weather = JSON.parse(stored)
+    checkLanguage()
     writeToDoc(weather)
   } else {
+    checkLanguage()
     checkNavigator()
   }
 }
 
-// CHECK FOR LOCATION AVAILABILITY
+// IS PREFERRED LANGUAGE AVAILABLE ?
+function checkLanguage () {
+  if (lang) {
+    binarySearch(apiLangs, lang)
+  } else {
+    lang = 'en'
+  }
+}
+
+// SEARCH ALGO
+function binarySearch (arr, find) {
+  console.log('Starting binarySearch')
+  let mid = arr.length / 2
+  let midVal = arr[mid]
+  console.log(`Middle value is: ${midVal}`)
+  if (lang.indexOf(midVal) !== -1) {
+
+  }
+} // TODO: FINISH BINARY SEARCH
+
+// GEOLOCATION AVAILABLE ?
 function checkNavigator () {
   if (window.navigator.geolocation) {
     // yup, get location
@@ -83,6 +110,7 @@ function geoSuccess (position) {
 // API REQUEST CALLBACKS
 request.onloadstart = _ => console.log('LOAD START')
 request.onprogress = _ => console.log('LOADING')
+
 request.onload = function () {
   if (this.status >= 200 && this.status < 400) {
     // parse it, and, store it
@@ -95,38 +123,15 @@ request.onload = function () {
     window.alert('An error occured on retrieving data.')
   }
 }
+
 request.onloadend = _ => {
   console.log('LOAD END')
   writeToDoc(weather)
 }
 
-// IS PREFERRED LANGUAGE AVAILABLE ?
-;(function checkLanguage () {
-  if (lang) {
-    binarySearch(apiLangs, lang)
-  } else {
-    lang = 'en'
-  }
-}())
-
-// SEARCH ALGO
-function binarySearch (arr, find) {
-  console.log('Starting binarySearch')
-  let mid = arr.length / 2
-  let midVal = arr[mid]
-  console.log(`Middle value is: ${midVal}`)
-  if (langCompare(midVal, lang)) { // TODO: FINISH BINARY SEARCH
-
-  }
-}
-
-function langCompare (apiLang, lang) { // TODO: NOTE: MAY REPLACE WITH INDEXOF()
-
-}
-
 // CHECK TEMP SCALE
-function tempScaleCheck (data) {
-  if (data.flags.units === 'us') {
+function tempScaleCheck () {
+  if (weather.flags.units === 'us') {
     scaleChar = 'F'
   } else {
     scaleChar = 'C'
@@ -134,17 +139,19 @@ function tempScaleCheck (data) {
 }
 
 // FINALLY, WRITE TO THE DOC
-function writeToDoc (data) {
-  const location = `${data.latitude}, ${data.longitude}`
-  const time = new Date(data.currently.time * 1e3)
+function writeToDoc () {
+  const location = `${weather.latitude}, ${weather.longitude}`
+  const current = weather.currently
+  const time = new Date(current.time * 1e3)
   const isoTime = time.toISOString()
   const utcTime = time.toUTCString()
-  const current = data.currently
   // set scaleChar
-  tempScaleCheck(data)
+  tempScaleCheck()
+  // TODO: ADD IF ICON DEFINED FUNCTION + DEFAULT VALUE
+  // select('.icon').setAttribute('id', iconStr)
 
   select('.location').innerHTML = location
-  select('.summary').innerHTML = data.currently.summary
+  select('.summary').innerHTML = current.summary
   select('.temp').innerHTML = `${current.temperature}&#176;${scaleChar}`
   select('time').setAttribute('datetime', isoTime)
   select('time').innerHTML = utcTime
