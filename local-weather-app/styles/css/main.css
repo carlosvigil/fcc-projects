@@ -87,8 +87,11 @@ html {
   font-family: 'Poly', serif;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Varela Round', sans-serif;
+h1,
+h2,
+h3,
+h4 {
+  font-family: sans-serif;
 }
 
 h1 {
