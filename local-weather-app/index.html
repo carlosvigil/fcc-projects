@@ -13,27 +13,19 @@
               $.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=' +lat+ '&lon=' +lon+ '&APPID=377f58c9485604f2914f58a16a7b2fb0',
                 function(json) {
                   console.log(json);
-                  var high = json.main.temp_max, current = json.main.temp, low = json.main.temp_min;
+                  var high = $('.hi-temp').html(json.main.temp_max);
+                  var current = $('.temp').html(json.main.temp);
+                  var low = $('.lo-temp').html(json.main.temp_min);
               // USE UNIT FORMAT FROM API NOT THIS MASSIVE WASTE
                   function tempConvert(kelvin, scale) {
                     var convert = scale == 'f' ? (1.8 * (kelvin - 273) + 32) : kelvin - 273.15;
                     return Math.floor(convert);
-                  }
+                }
 
                   $('.loc').html(json.name+', '+json.sys.country);
-
-                  $('.hi-temp').html(tempConvert(high, 'f') + '&deg;F ');
-                  $('.temp').html(tempConvert(current, 'f') + '&deg;F ');
-                  $('.lo-temp').html(tempConvert(low, 'f') + '&deg;F ');
-
                   $('.main').html(json.weather[0].main);
                   $('.gist').html('It\'s a '+json.weather[0].description+'.');
-
                   $('button').on('click', function() {
-                    $('.hi-temp').html(tempConvert(high, 'c') + '&deg;C ');
-                    $('.temp').html(tempConvert(current, 'c') + '&deg;C ');
-                    $('.lo-temp').html(tempConvert(low, 'c') + '&deg;C ');
-                    $(this).hide();
                   });
 
                   switch (current) {
