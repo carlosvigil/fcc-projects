@@ -40,16 +40,6 @@ body {
   mix-blend-mode: multiply;
 }
 
-.temp {
-  padding-right: 8px;
-}
-
-.switch {
-  display: inline-flex;
-  align-items: center;
-  align-content: center;
-}
-
 .switch label {
   display: block;
   width: 46px;
@@ -60,6 +50,7 @@ body {
   user-select: none;
   transition: background 350ms ease;
   text-align: center;
+  item-align: flex-end;
 }
 
 .switch label:before,
