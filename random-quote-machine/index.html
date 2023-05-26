@@ -5,18 +5,23 @@
     <meta content="http://codepen.io/Cairos/full/ZOwGXw/" property="og:url">
     <meta content="website" property="og:type">
     <meta content="Random Tao Te Ching" property="og:title">
-    <meta content="Get a random chapter from the Tao Te Ching" property="og:description">
+    <meta content="Get a random chapter from the Tao Te Ching"
+          property="og:description">
     <title>Random Tao Te Ching Chapters</title>
-    <link href="https://npmcdn.com/basscss@8.0.2/css/basscss.min.css" rel="stylesheet" type="text/css">
-    <link href="https://npmcdn.com/basscss-responsive-margin@1.1.0/css/responsive-margin.css" rel="stylesheet" type="text/css">
+    <link href="https://npmcdn.com/basscss@8.0.2/css/basscss.min.css"
+          rel="stylesheet" type="text/css">
+    <link href="https://npmcdn.com/basscss-responsive-margin@1.1.0/css/responsive-margin.css"
+          rel="stylesheet" type="text/css">
     <link href="styles.css" rel="stylesheet" type="text/css">
   </head>
-  <body class="flex flex-row max-width-4 mx-auto sm-m1">
+  <body class="max-width-4 mx-auto pt4">
+
     <div id="fb-root"></div>
     <script>
       (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));
     </script>
-    <div class="table col left xs-hide sm-col-1">
+
+    <div class="table left xs-hide sm-col-1">
       <div class="table-cell h1 center align-middle">
         T<br>a<br>o<br><br> T<br>e<br><br> C<br>h<br>i<br>n<br>g
       </div>
@@ -25,21 +30,54 @@
         <div class="line-bottom"></div>
       </div>
     </div>
-    <div class="article left h3 col sm-col-1">
-      The tao that can be told<br> is not the eternal Tao<br> The name that can be named<br> is not the eternal Name.<br><br> The unnamable is the eternally real.<br> Naming is the origin<br> of all particular things.<br><br> Free from desire, you realize the mystery.<br> Caught in desire, you see only the manifestations.<br><br> Yet mystery and manifestations<br> arise from the same source.<br> This source is called darkness.<br><br> Darkness within darkness.<br> The gateway to all understanding. 
+
+    <div class="article col-5 ml4 left h3">
+      The tao that can be told<br>
+      is not the eternal Tao<br>
+      The name that can be named<br>
+      is not the eternal Name.<br>
+      <br>
+      The unnamable is the eternally real.<br>
+      Naming is the origin<br>
+      of all particular things.<br>
+      <br>
+      Free from desire, you realize the mystery.<br>
+      Caught in desire, you see only the manifestations.<br>
+      <br>
+      Yet mystery and manifestations<br>
+      arise from the same source.<br>
+      This source is called darkness.<br>
+      <br>
+      Darkness within darkness.<br>
+      The gateway to all understanding.
     </div>
-    <div class="inline-flex col sm-col-1 flex-wrap flex-column h4 mx-auto">
-      <button class="new table-cell align-middle xs-m2">Random Chapter</button>
-      <div class="table xs-my1">
-        <a class="twitter-share-button table-cell align-bottom" href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a>
-        <div class="fb-share-button table-cell align-top" data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button" data-mobile-iframe="false" data-size="small">
-          <a class="fb-xfbml-parse-ignore" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;amp;src=sdkpreparse" target="_blank">Share</a>
+
+    <div class="flex col-5 right flex-wrap flex-column h4">
+      <div class="table mb2">
+        <button class="new table-cell align-middle mt2 mr2">Random Chapter</button>
+
+        <a class="twitter-share-button table-cell align-bottom"
+          href="https://twitter.com/intent/tweet?text=Get%20a%20random%20quote%20from%20the%20Tao%20Te%20Ching&amp;url=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;hashtag=codenewbies,freecodecamp&amp;via=cairos_v&amp;related=freecodecamp%3AFreeCodeCamp,twitterapi%3ATwitter%20API%20News">Tweet</a>
+
+        <div class="fb-share-button table-cell align-middle"
+          data-href="http://codepen.io/Cairos/full/ZOwGXw/" data-layout="button"
+          data-mobile-iframe="false" data-size="small">
+          <a class="fb-xfbml-parse-ignore"
+            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcodepen.io%2FCairos%2Ffull%2FZOwGXw%2F&amp;amp;src=sdkpreparse"
+            target="_blank">Share</a>
         </div>
       </div>
-      <div class="credit xs-ml1">
-        Written by Lao-tzu<br> Translation by S. Mitchell<br> Copyright &#169; 2016 <a href="https://www.twitter.com/@cairos_v" title="Twitter Profile">Carlos Vigil</a>
+
+      <div class="credit">
+        Written by Lao-tzu<br>
+        Translation by S. Mitchell<br>
+        Copyright &#169; 2016
+        <a href="https://www.twitter.com/@cairos_v" title="Twitter Profile">
+          Carlos Vigil</a>
       </div>
+
     </div>
+
     <script>
       window.twttr = (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0],
@@ -49,16 +87,20 @@
         js.id = id;
         js.src = "https://platform.twitter.com/widgets.js";
         fjs.parentNode.insertBefore(js, fjs);
-      
+
         t._e = [];
         t.ready = function(f) {
           t._e.push(f);
         };
-      
+
         return t;
       }(document, "script", "twitter-wjs"));
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+    </script>
+
     <script src="script.js"></script>
   </body>
 </html>
