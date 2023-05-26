@@ -1,0 +1,51 @@
+@function pow($num, $exp)
+  $result: 1
+  @for $i from 1 through $exp
+    $result: $result * $num
+  @return $result
+
+$base: 9px
+$next: 7px
+$phi: 1.61803398875
+
+// returns a golden pixel value from a multiplier
+@function phi-pxl($scale, $next-down: false)
+  @if $next-down
+    @return $next * pow($phi, $scale)
+  @else
+    @return $base * pow($phi, $scale)
+
+// generate golden typograpic styles for an element
+@mixin gtype($scale, $next-down: false)
+  $s: phi-pxl($scale, $next-down)
+  font-size: $s
+  line-height: $s * $phi
+  margin-top: $s
+  max-width: $s * pow($phi, 8)
+
+@for $i from 1 through 3
+  h#{$i}
+    @include gtype(6 - $i)
+
+h4
+  @include gtype(3, true)
+
+p
+  @include gtype(2)
+
+//general styles
+html
+  font-size: $base
+  font-family: 'Poly', serif
+
+h1,
+h2,
+h3,
+h4
+  font-family: sans-serif
+
+h1
+  text-align: center
+
+a
+  text-decoration: none
