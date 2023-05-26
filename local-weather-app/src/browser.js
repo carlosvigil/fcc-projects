@@ -1,4 +1,3 @@
-/* eslint-env browser */
 // REQUIREMENT: add toggle switch for temperature scale
 // FEATURE: add session storage comparison
 //   "if new position differs from stored position"

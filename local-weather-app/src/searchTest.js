@@ -1,6 +1,6 @@
 import setLanguage from './langSearch.js'
 import { apiLangs } from './api.js'
-/* eslint-env browser */
+
 window.addEventListener('load', function loaded () {
   console.log('DOCUMENT IS READY')
   const wLang = ['en-us', 'zh-sp', 'es-es']

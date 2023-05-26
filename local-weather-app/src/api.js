@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import setLanguage from './langSearch.js'
 
 const apiLangs = [
