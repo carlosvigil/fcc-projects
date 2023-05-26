@@ -1,12 +1,13 @@
 /* eslint-env browser */
+import setLanguage from './langSearch.js'
 
-// const apiLangs = [
-//   'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el',
-//   'en', 'es', 'et', 'fr', 'hr', 'hu', 'id', 'it', 'is', 'kw', 'nb', 'nl',
-//   'pl', 'pt', 'ru', 'sk', 'sl', 'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin',
-//   'zh', 'zh-tw'
-// ]
-export const dummyData = {
+const apiLangs = [
+  'ar', 'az', 'be', 'bg', 'bs', 'ca', 'cs', 'de', 'el', 'en', 'es', 'et', 'fr',
+  'hr', 'hu', 'id', 'it', 'is', 'kw', 'nb', 'nl', 'pl', 'pt', 'ru', 'sk', 'sl',
+  'sr', 'sv', 'tet', 'tr', 'uk', 'x-pig-latin', 'zh', 'zh-tw'
+]
+
+const dummyData = {
   'latitude': 41.400004027224064,
   'longitude': -73.08102241601675,
   'timezone': 'America/New_York',
@@ -15,28 +16,16 @@ export const dummyData = {
     'time': 1496461442,
     'summary': 'Clear',
     'icon': 'clear-night',
-    'nearestStormDistance': 9,
-    'nearestStormBearing': 129,
-    'precipIntensity': 0,
-    'precipProbability': 0,
-    'temperature': 52.26,
-    'apparentTemperature': 52.26,
-    'dewPoint': 39.38,
-    'humidity': 0.61,
-    'windSpeed': 4.91,
-    'windBearing': 315,
-    'visibility': 10,
-    'cloudCover': 0,
-    'pressure': 1015.07,
-    'ozone': 384.47
+    'temperature': 52.26
   },
   'flags': { 'units': 'us' }
 }
 
 // FUNCTIONAL CHECK 🆗
 // BUILD REQUEST URL
-export function urlBuilder (position) {
-  const lang = 'en'
+function urlBuilder (position) {
+  const browserLang = window.navigator.language.toLowerCase()
+  const lang = setLanguage(apiLangs, browserLang)
   const key = '767b3baa2aca876fa6ea5e4fbd75228c'
   const lat = position.coords.latitude
   const lon = position.coords.longitude
@@ -49,7 +38,7 @@ export function urlBuilder (position) {
 
 // FUNCTIONAL CHECK 🆗
 // CALL API TO GET DATA
-export function getWeatherData (url) {
+function getWeatherData (url) {
   return new Promise(function promiseResponse (resolve, reject) {
     const request = new XMLHttpRequest()
     // REQUEST CALLBACKS
@@ -68,3 +57,5 @@ export function getWeatherData (url) {
     request.send()
   })
 }
+
+export { apiLangs, dummyData, urlBuilder, getWeatherData }

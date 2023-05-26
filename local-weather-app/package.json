@@ -9,15 +9,19 @@
   "scripts": {
     "build": "webpack --progress --config webpack.config.js",
     "watch-pack": "webpack --progress --watch --config webpack.config.js",
+    "watch-test-pack": "webpack --progress --watch --config test.config.js",
     "watch-browser": "browser-sync start -c 'bs-config.js'",
-    "dev": "npm-run-all --parallel watch-pack watch-browser"
+    "dev": "npm-run-all --parallel watch-pack watch-browser",
+    "test": "npm-run-all --parallel watch-test-pack watch-browser"
   },
   "eslintConfig": {
     "extends": "standard",
     "plugins": [
+      "html",
       "import",
-      "standard",
-      "promise"
+      "node",
+      "promise",
+      "standard"
     ]
   },
   "stylelint": {
@@ -29,6 +33,7 @@
     "babel-preset-env": "^1.5.1",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-html": "^2.0.3",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
